@@ -1,4 +1,5 @@
 import React, { createContext, FC, ReactNode, useContext } from "react"
+import { formatBlueskyLongDate, formatBlueskyShortDate } from "../helpers";
 
 type BlueskyConfig = {
 	app: string,
@@ -12,7 +13,14 @@ type BlueskyConfig = {
 	borderColor: string,
 	fontFamily: string,
 	fontSize: string | number,
+	fontWeight: string | number,
+	titleFontWeight: string | number,
 	lineHeight: string | number,
+	grid: number,
+	borderRadius: number | string,
+	width: number | string,
+	formatShortDate: (dateString: string) => string,
+	formatLongDate: (dateString: string) => string,
 }
 
 const defaultConfig: BlueskyConfig = {
@@ -27,7 +35,14 @@ const defaultConfig: BlueskyConfig = {
 	borderColor: "#2e4052",
 	fontFamily: `InterVariable, Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"`,
 	fontSize: "15px",
+	fontWeight: 400,
+	titleFontWeight: 600,
 	lineHeight: "140%",
+	grid: 8,
+	borderRadius: 6,
+	width: 600,
+	formatShortDate: formatBlueskyShortDate,
+	formatLongDate: formatBlueskyLongDate,
 }
 
 const blueskyConfigContext = createContext<BlueskyConfig>(defaultConfig);

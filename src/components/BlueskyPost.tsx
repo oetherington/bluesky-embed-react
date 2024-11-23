@@ -1,4 +1,5 @@
-import React, { FC } from "react";
+import React, { FC, MouseEvent } from "react";
+import { getBlueskyLinkProps, getBlueskyProfileUrl } from "../helpers";
 import { useBlueskyPost } from "../hooks/useBlueskyPost";
 import { useBlueskyProfile } from "../hooks/useBlueskyProfile";
 import { BlueskyText } from "./BlueskyText";
@@ -10,12 +11,31 @@ export type BlueskyPostProps = {
 	postId: string,
 }
 
+const decorationHandler = (
+	value: "underline" | "none",
+	ev: MouseEvent<HTMLAnchorElement>,
+) => {
+	const target = ev.target as HTMLAnchorElement;
+	target.style.textDecoration = value;
+}
+
 export const BlueskyPost: FC<BlueskyPostProps> = ({userHandle, postId}) => {
 	const {
+		app,
+		openLinksInNewTab,
 		hideAvatars,
+		textPrimaryColor,
+		textSecondaryColor,
 		backgroundColor,
 		borderColor,
 		fontFamily,
+		fontWeight,
+		titleFontWeight,
+		grid,
+		borderRadius,
+		width,
+		formatShortDate,
+		formatLongDate,
 	} = useBlueskyConfig();
 	const {
 		value: post,
@@ -32,14 +52,46 @@ export const BlueskyPost: FC<BlueskyPostProps> = ({userHandle, postId}) => {
 	return (
 		<div style={{
 			display: "flex",
-			gap: 16,
+			gap: grid * 1.5,
+			padding: grid * 2,
 			backgroundColor,
-			padding: 16,
 			border: `1px solid ${borderColor}`,
+			borderRadius,
 			fontFamily,
+			minWidth: 0,
+			maxWidth: "100%",
+			width,
 		}}>
 			{!hideAvatars && <BlueskyAvatar profile={profile} />}
 			<div>
+				<div style={{
+					display: "flex",
+					gap: grid,
+					marginBottom: grid,
+				}}>
+					<a
+						href={getBlueskyProfileUrl(app, profile?.handle ?? "")}
+						onMouseOver={decorationHandler.bind(null, "underline")}
+						onMouseOut={decorationHandler.bind(null, "none")}
+						style={{
+							textDecoration: "none",
+							color: textPrimaryColor,
+							fontWeight: titleFontWeight,
+						}}
+						{...getBlueskyLinkProps(openLinksInNewTab)}
+					>
+						{profile?.displayName}
+					</a>
+					<span style={{color: textSecondaryColor, fontWeight}}>
+						@{profile?.handle} ·{" "}
+						<abbr
+							title={formatLongDate(post.createdAt)}
+							style={{textDecoration: "none"}}
+						>
+							{formatShortDate(post.createdAt)}
+						</abbr>
+					</span>
+				</div>
 				<BlueskyText text={post.text} />
 			</div>
 		</div>

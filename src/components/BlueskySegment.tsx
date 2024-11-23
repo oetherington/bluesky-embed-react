@@ -1,5 +1,10 @@
 import React, { FC } from "react";
 import type { RichTextSegment } from "@atproto/api";
+import {
+	getBlueskyLinkProps,
+	getBlueskyProfileUrl,
+	getBlueskyTagUrl,
+} from "../helpers";
 import { useBlueskyConfig } from "../hooks/useBlueskyConfig";
 
 export type BlueskySegmentProps = {
@@ -8,9 +13,7 @@ export type BlueskySegmentProps = {
 
 export const BlueskySegment: FC<BlueskySegmentProps> = ({segment}) => {
 	const {app, openLinksInNewTab} = useBlueskyConfig();
-	const linkProps = openLinksInNewTab
-		? {target: "_blank", rel: "noopener noreferrer"}
-		: {};
+	const linkProps = getBlueskyLinkProps(openLinksInNewTab);
 
 	if (segment.isLink()) {
 		return (
@@ -22,7 +25,10 @@ export const BlueskySegment: FC<BlueskySegmentProps> = ({segment}) => {
 
 	if (segment.isMention()) {
 		return (
-			<a href={`${app}/profile/${segment.mention?.did}`} {...linkProps}>
+			<a
+				href={getBlueskyProfileUrl(app, segment.mention?.did ?? "")}
+				{...linkProps}
+			>
 				{segment.text}
 			</a>
 		);
@@ -30,7 +36,7 @@ export const BlueskySegment: FC<BlueskySegmentProps> = ({segment}) => {
 
 	if (segment.isTag()) {
 		return (
-			<a href={`${app}/hashtag/${segment.tag?.tag}`} {...linkProps}>
+			<a href={getBlueskyTagUrl(app, segment.tag?.tag ?? "")} {...linkProps}>
 				{segment.text}
 			</a>
 		);

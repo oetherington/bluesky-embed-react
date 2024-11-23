@@ -10,7 +10,7 @@ export type BlueskyTextProps = {
 
 export const BlueskyText: FC<BlueskyTextProps> = ({text}) => {
 	const client = useBlueskyClient();
-	const {textPrimaryColor, fontSize} = useBlueskyConfig();
+	const {textPrimaryColor, fontSize, fontWeight} = useBlueskyConfig();
 	const [segments, setSegments] = useState<RichTextSegment[]>([]);
 
 	useEffect(() => {
@@ -22,7 +22,7 @@ export const BlueskyText: FC<BlueskyTextProps> = ({text}) => {
 	}, [text, client]);
 
 	return (
-		<div style={{color: textPrimaryColor, fontSize}}>
+		<div style={{color: textPrimaryColor, fontSize, fontWeight}}>
 			{segments.map((segment, i) => (
 				<BlueskySegment key={i} segment={segment} />
 			))}

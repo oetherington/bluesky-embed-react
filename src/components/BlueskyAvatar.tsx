@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import { getBlueskyLinkProps, getBlueskyProfileUrl } from "../helpers";
 import { useBlueskyConfig } from "../hooks/useBlueskyConfig";
 import type { BlueskyProfileData } from "../hooks/useBlueskyProfile";
 
@@ -8,9 +9,6 @@ export type BlueskyAvatarProps = {
 
 export const BlueskyAvatar: FC<BlueskyAvatarProps> = ({profile}) => {
 	const {app, openLinksInNewTab, avatarSize, borderColor} = useBlueskyConfig();
-	const linkProps = openLinksInNewTab
-		? {target: "_blank", rel: "noopener noreferrer"}
-		: {};
 
 	if (!profile) {
 		return (
@@ -30,7 +28,10 @@ export const BlueskyAvatar: FC<BlueskyAvatarProps> = ({profile}) => {
 
 	return (
 		<div>
-			<a href={`${app}/profile/${profile.handle}`} {...linkProps}>
+			<a
+				href={getBlueskyProfileUrl(app, profile.handle)}
+				{...getBlueskyLinkProps(openLinksInNewTab)}
+			>
 				<img
 					src={profile.avatar}
 					title={profile.displayName ?? profile.handle}
