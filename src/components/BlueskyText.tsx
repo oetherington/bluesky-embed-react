@@ -22,7 +22,12 @@ export const BlueskyText: FC<BlueskyTextProps> = ({text}) => {
 	}, [text, client]);
 
 	return (
-		<div style={{color: textPrimaryColor, fontSize, fontWeight}}>
+		<div style={{
+			color: textPrimaryColor,
+			fontSize,
+			fontWeight,
+			whiteSpace: "pre-line",
+		}}>
 			{segments.map((segment, i) => (
 				<BlueskySegment key={i} segment={segment} />
 			))}
