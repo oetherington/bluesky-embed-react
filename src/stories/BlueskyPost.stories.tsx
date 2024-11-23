@@ -36,3 +36,18 @@ BlueskyPost.args = {
 	postId: "3l6oveex3ii2l",
 	...defaultBlueskyConfig,
 };
+
+export const BlueskyMediaPost: StoryFn<BlueskyPostProps & BlueskyConfig> = ({
+	userHandle,
+	postId,
+	...config
+}) => (
+	<BlueskyConfigProvider {...config}>
+		<BlueskyPostComponent userHandle={userHandle} postId={postId} />
+	</BlueskyConfigProvider>
+);
+BlueskyMediaPost.args = {
+	userHandle: "bsky.app",
+	postId: "3lax5zxh7bc2p",
+	...defaultBlueskyConfig,
+};

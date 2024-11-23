@@ -43,6 +43,7 @@ export const BlueskyPost: FC<BlueskyPostProps> = ({userHandle, postId}) => {
 		error: postError,
 	} = useBlueskyPost(userHandle, postId);
 	const {value: profile} = useBlueskyProfile(userHandle);
+	console.log(post);
 
 	if (postLoading || postError || !post) {
 		// TODO
