@@ -1,0 +1,52 @@
+{
+	"name": "bluesky-embed-react",
+	"version": "0.0.1",
+	"description": "React component to embed bluesky profiles",
+	"keywords": [
+		"react",
+		"bluesky",
+		"bsky",
+		"embed",
+		"social",
+		"media"
+	],
+	"homepage": "https://github.com/oetherington/bluesky-embed-react#readme",
+	"bugs": {
+		"url": "https://github.com/oetherington/bluesky-embed-react/issues"
+	},
+	"repository": "github:oetherington/bluesky-embed-react",
+	"author": {
+		"name": "Ollie Etherington",
+		"url": "https://github.com/oetherington"
+	},
+	"license": "MIT",
+	"scripts": {
+		"storybook": "storybook dev -p 6006 --no-open",
+		"build-storybook": "storybook build"
+	},
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"files": [
+		"/dist"
+	],
+	"peerDependencies": {
+		"react": "^16.0.0 || ^17.0.0 || ^18.0.0",
+		"react-dom": "^16.0.0 || ^17.0.0 || ^18.0.0"
+	},
+	"devDependencies": {
+		"@storybook/addon-essentials": "^8.4.5",
+		"@storybook/addon-interactions": "^8.4.5",
+		"@storybook/addon-links": "^8.4.5",
+		"@storybook/react-vite": "^8.4.5",
+		"@types/react": "^18.3.12",
+		"@types/react-dom": "^18.3.1",
+		"eslint": "^9.15.0",
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1",
+		"storybook": "^8.4.5",
+		"typescript": "^5.7.2"
+	},
+	"dependencies": {
+		"@atproto/api": "^0.13.18"
+	}
+}
