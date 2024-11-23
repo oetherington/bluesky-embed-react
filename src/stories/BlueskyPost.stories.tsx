@@ -8,7 +8,6 @@ import {
 const meta: Meta = {
 	title: "Bluesky Post",
 	component: BlueskyPostComponent,
-	argTypes: {},
 };
 
 export default meta;

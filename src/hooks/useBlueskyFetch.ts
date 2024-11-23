@@ -19,6 +19,7 @@ export const useBlueskyFetch = <T>(
 		} catch (e) {
 			setValue(null);
 			setError(e);
+			console.error("Bluesky fetch error:", e);
 		} finally {
 			setLoading(false);
 		}

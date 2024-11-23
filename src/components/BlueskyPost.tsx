@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { useBlueskyPost } from "../hooks/useBlueskyPost";
+import { BlueskyText } from "./BlueskyText";
 
 export type BlueskyPostProps = {
 	username: string,
@@ -8,10 +9,17 @@ export type BlueskyPostProps = {
 
 export const BlueskyPost: FC<BlueskyPostProps> = ({username, postId}) => {
 	const {value: post, loading, error} = useBlueskyPost(username, postId);
-	console.log("POST", post, loading, error);
+
+	if (loading || error || !post) {
+		// TODO
+		return null;
+	}
+
+	console.log("post", post.value);
+
 	return (
 		<div>
-			Post {post?.value?.createdAt}
+			<BlueskyText text={post.value.text} />
 		</div>
 	);
 }
