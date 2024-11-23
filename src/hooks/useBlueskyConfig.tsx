@@ -1,7 +1,7 @@
 import React, { createContext, FC, ReactNode, useContext } from "react"
 import { formatBlueskyLongDate, formatBlueskyShortDate } from "../helpers";
 
-type BlueskyConfig = {
+export type BlueskyConfig = {
 	app: string,
 	service: string,
 	openLinksInNewTab: boolean,
@@ -23,7 +23,7 @@ type BlueskyConfig = {
 	formatLongDate: (dateString: string) => string,
 }
 
-const defaultConfig: BlueskyConfig = {
+export const defaultBlueskyConfig: BlueskyConfig = {
 	app: "https://bsky.app",
 	service: "https://public.api.bsky.app",
 	openLinksInNewTab: false,
@@ -34,7 +34,7 @@ const defaultConfig: BlueskyConfig = {
 	backgroundColor: "#161e27",
 	borderColor: "#2e4052",
 	fontFamily: `InterVariable, Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"`,
-	fontSize: "15px",
+	fontSize: 15,
 	fontWeight: 400,
 	titleFontWeight: 600,
 	lineHeight: "140%",
@@ -45,7 +45,7 @@ const defaultConfig: BlueskyConfig = {
 	formatLongDate: formatBlueskyLongDate,
 }
 
-const blueskyConfigContext = createContext<BlueskyConfig>(defaultConfig);
+const blueskyConfigContext = createContext<BlueskyConfig>(defaultBlueskyConfig);
 
 export type BlueskyConfigProviderProps = Partial<BlueskyConfig> & {
 	children: ReactNode,
@@ -56,7 +56,7 @@ export const BlueskyConfigProvider: FC<BlueskyConfigProviderProps> = ({
 	...config
 }) => {
 	return (
-		<blueskyConfigContext.Provider value={{...defaultConfig, ...config}}>
+		<blueskyConfigContext.Provider value={{...defaultBlueskyConfig, ...config}}>
 			{children}
 		</blueskyConfigContext.Provider>
 	);
