@@ -4,6 +4,7 @@ import {
 	BlueskyText as BlueskyTextComponent,
 	BlueskyTextProps,
 } from "../components/BlueskyText";
+import "./story.css";
 
 const meta: Meta = {
 	title: "Bluesky Text",
