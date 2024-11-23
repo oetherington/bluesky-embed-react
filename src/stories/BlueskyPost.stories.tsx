@@ -16,6 +16,6 @@ export const BlueskyPost: StoryFn<BlueskyPostProps> = (args) => (
 	<BlueskyPostComponent {...args} />
 );
 BlueskyPost.args = {
-	username: "bsky.app",
+	userHandle: "bsky.app",
 	postId: "3l6oveex3ii2l",
 };

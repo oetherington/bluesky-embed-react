@@ -1,9 +1,11 @@
 import { AtpAgent } from "@atproto/api";
 import { useBlueskyConfig } from "./useBlueskyConfig";
 
-const agents = new Map<string, AtpAgent>();
+export type BlueskyClient = AtpAgent;
 
-export const useBlueskyClient = (): AtpAgent => {
+const agents = new Map<string, BlueskyClient>();
+
+export const useBlueskyClient = (): BlueskyClient => {
 	const {service} = useBlueskyConfig();
 	let agent = agents.get(service);
 	if (agent) {

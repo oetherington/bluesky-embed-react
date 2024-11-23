@@ -1,9 +1,8 @@
-import AtpAgent from "@atproto/api";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useBlueskyClient } from "./useBlueskyClient";
+import { BlueskyClient, useBlueskyClient } from "./useBlueskyClient";
 
 export const useBlueskyFetch = <T>(
-	callback: (client: AtpAgent) => Promise<T>,
+	callback: (client: BlueskyClient) => Promise<T>,
 ) => {
 	const client = useBlueskyClient();
 	const [loading, setLoading] = useState(true);

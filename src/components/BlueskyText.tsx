@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 import { RichText, RichTextSegment } from "@atproto/api";
 import { useBlueskyClient } from "../hooks/useBlueskyClient";
+import { useBlueskyConfig } from "../hooks/useBlueskyConfig";
 import { BlueskySegment } from "./BlueskySegment";
 
 export type BlueskyTextProps = {
@@ -9,6 +10,7 @@ export type BlueskyTextProps = {
 
 export const BlueskyText: FC<BlueskyTextProps> = ({text}) => {
 	const client = useBlueskyClient();
+	const {textPrimaryColor, fontSize} = useBlueskyConfig();
 	const [segments, setSegments] = useState<RichTextSegment[]>([]);
 
 	useEffect(() => {
@@ -20,7 +22,7 @@ export const BlueskyText: FC<BlueskyTextProps> = ({text}) => {
 	}, [text, client]);
 
 	return (
-		<div>
+		<div style={{color: textPrimaryColor, fontSize}}>
 			{segments.map((segment, i) => (
 				<BlueskySegment key={i} segment={segment} />
 			))}
