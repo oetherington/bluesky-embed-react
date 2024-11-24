@@ -23,6 +23,7 @@
 	"scripts": {
 		"lint": "eslint",
 		"tsc": "tsc --noEmit --skipLibCheck",
+		"format": "prettier . --write",
 		"storybook": "storybook dev -p 6006 --no-open",
 		"build-storybook": "storybook build"
 	},
@@ -46,6 +47,7 @@
 		"@types/react": "^18.3.12",
 		"@types/react-dom": "^18.3.1",
 		"eslint": "^9.15.0",
+		"prettier": "^3.3.3",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1",
 		"storybook": "^8.4.5",
