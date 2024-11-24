@@ -10,6 +10,9 @@ const config = {
 		name: "@storybook/react-vite",
 		options: {},
 	},
+	core: {
+		disableTelemetry: true,
+	},
 };
 
 export default config;
