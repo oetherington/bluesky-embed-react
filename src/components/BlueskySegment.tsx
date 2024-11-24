@@ -8,11 +8,11 @@ import {
 import { useBlueskyConfig } from "../hooks/useBlueskyConfig";
 
 export type BlueskySegmentProps = {
-	segment: RichTextSegment,
-}
+	segment: RichTextSegment;
+};
 
-export const BlueskySegment: FC<BlueskySegmentProps> = ({segment}) => {
-	const {app, openLinksInNewTab} = useBlueskyConfig();
+export const BlueskySegment: FC<BlueskySegmentProps> = ({ segment }) => {
+	const { app, openLinksInNewTab } = useBlueskyConfig();
 	const linkProps = getBlueskyLinkProps(openLinksInNewTab);
 
 	if (segment.isLink()) {
@@ -42,9 +42,5 @@ export const BlueskySegment: FC<BlueskySegmentProps> = ({segment}) => {
 		);
 	}
 
-	return (
-		<span>
-			{segment.text}
-		</span>
-	);
-}
+	return <span>{segment.text}</span>;
+};

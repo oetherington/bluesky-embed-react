@@ -6,7 +6,7 @@ export type BlueskyClient = AtpAgent;
 const agents = new Map<string, BlueskyClient>();
 
 export const useBlueskyClient = (): BlueskyClient => {
-	const {service} = useBlueskyConfig();
+	const { service } = useBlueskyConfig();
 	let agent = agents.get(service);
 	if (agent) {
 		return agent;
@@ -14,4 +14,4 @@ export const useBlueskyClient = (): BlueskyClient => {
 	agent = new AtpAgent({ service });
 	agents.set(service, agent);
 	return agent;
-}
+};

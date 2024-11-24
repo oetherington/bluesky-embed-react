@@ -6,11 +6,14 @@ import { useBlueskyFetch } from "./useBlueskyFetch";
 export type BlueskyProfileData = AppBskyActorDefs.ProfileViewDetailed;
 
 export const useBlueskyProfile = (userHandle: string) => {
-	const callback = useCallback(async (client: BlueskyClient) => {
-		const result = await client.getProfile({
-			actor: userHandle,
-		});
-		return result.data;
-	}, [userHandle]);
+	const callback = useCallback(
+		async (client: BlueskyClient) => {
+			const result = await client.getProfile({
+				actor: userHandle,
+			});
+			return result.data;
+		},
+		[userHandle],
+	);
 	return useBlueskyFetch<BlueskyProfileData>(callback);
-}
+};

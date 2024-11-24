@@ -5,12 +5,12 @@ import { useBlueskyShimmer } from "../hooks/useBlueskyShimmer";
 import type { BlueskyProfileData } from "../hooks/useBlueskyProfile";
 
 export type BlueskyAvatarProps = {
-	profile: BlueskyProfileData | null,
-}
+	profile: BlueskyProfileData | null;
+};
 
-export const BlueskyAvatar: FC<BlueskyAvatarProps> = ({profile}) => {
-	const {app, openLinksInNewTab, avatarSize, borderColor} = useBlueskyConfig();
-	const {shimmerStyles} = useBlueskyShimmer();
+export const BlueskyAvatar: FC<BlueskyAvatarProps> = ({ profile }) => {
+	const { app, openLinksInNewTab, avatarSize, borderColor } = useBlueskyConfig();
+	const { shimmerStyles } = useBlueskyShimmer();
 
 	if (!profile) {
 		return (
@@ -29,11 +29,7 @@ export const BlueskyAvatar: FC<BlueskyAvatarProps> = ({profile}) => {
 	}
 
 	if (!profile.avatar) {
-		return (
-			<div>
-				TODO NO AVATAR
-			</div>
-		);
+		return <div>TODO NO AVATAR</div>;
 	}
 
 	return (
@@ -55,4 +51,4 @@ export const BlueskyAvatar: FC<BlueskyAvatarProps> = ({profile}) => {
 			</a>
 		</div>
 	);
-}
+};

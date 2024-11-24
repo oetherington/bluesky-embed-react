@@ -30,9 +30,9 @@ export const useBlueskyFetch = <T>(
 	}, [refetch]);
 
 	const result = useMemo(
-		() => ({value, loading, error, refetch}),
+		() => ({ value, loading, error, refetch }),
 		[value, loading, error, refetch],
 	);
 
 	return result;
-}
+};

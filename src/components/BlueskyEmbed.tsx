@@ -1,6 +1,6 @@
 import React, { CSSProperties, FC, MouseEvent, useCallback, useState } from "react";
 import type {
-    AppBskyEmbedDefs,
+	AppBskyEmbedDefs,
 	AppBskyEmbedExternal,
 	AppBskyEmbedImages,
 	AppBskyEmbedRecord,
@@ -21,12 +21,12 @@ export type BlueskyEmbedData =
 	| { $type: string; [k: string]: unknown };
 
 export type BlueskyEmbedProps = {
-	embed: BlueskyEmbedData,
-}
+	embed: BlueskyEmbedData;
+};
 
 const commonStyles = (
 	borderColor: string,
-	aspect?: AppBskyEmbedDefs.AspectRatio
+	aspect?: AppBskyEmbedDefs.AspectRatio,
 ): CSSProperties => ({
 	width: "100%",
 	borderRadius: 10,
@@ -35,9 +35,11 @@ const commonStyles = (
 });
 
 const getYoutubeEmbedUrl = (url: string): string | null => {
-	const result = url.match(/(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/user\/\S+|\/ytscreeningroom\?v=))([\w-]{10,12})\b/);
+	const result = url.match(
+		/(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/user\/\S+|\/ytscreeningroom\?v=))([\w-]{10,12})\b/,
+	);
 	return result ? `https://www.youtube.com/embed/${result[1]}?autoplay=1` : null;
-}
+};
 
 const getUrlHost = (url: string): string | null => {
 	try {
@@ -46,12 +48,12 @@ const getUrlHost = (url: string): string | null => {
 	} catch (_e) {
 		return null;
 	}
-}
+};
 
-const BlueskyImages: FC<{image: AppBskyEmbedImages.View}> = ({
-	image: {images},
+const BlueskyImages: FC<{ image: AppBskyEmbedImages.View }> = ({
+	image: { images },
 }) => {
-	const {openLinksInNewTab, borderColor, grid} = useBlueskyConfig();
+	const { openLinksInNewTab, borderColor, grid } = useBlueskyConfig();
 	const linkProps = getBlueskyLinkProps(openLinksInNewTab);
 
 	switch (images.length) {
@@ -74,17 +76,22 @@ const BlueskyImages: FC<{image: AppBskyEmbedImages.View}> = ({
 
 		default: {
 			return (
-				<div style={{
-					display: "flex",
-					flexWrap: "wrap",
-					gap: grid,
-					width: "100%",
-				}}>
+				<div
+					style={{
+						display: "flex",
+						flexWrap: "wrap",
+						gap: grid,
+						width: "100%",
+					}}
+				>
 					{images.map((image) => (
-						<div key={image.thumb} style={{
-							flexGrow: 1,
-							flexBasis: "40%",
-						}}>
+						<div
+							key={image.thumb}
+							style={{
+								flexGrow: 1,
+								flexBasis: "40%",
+							}}
+						>
 							<a href={image.fullsize} {...linkProps}>
 								<img
 									src={image.thumb}
@@ -103,9 +110,9 @@ const BlueskyImages: FC<{image: AppBskyEmbedImages.View}> = ({
 			);
 		}
 	}
-}
+};
 
-export const BlueskyEmbed: FC<BlueskyEmbedProps> = ({embed}) => {
+export const BlueskyEmbed: FC<BlueskyEmbedProps> = ({ embed }) => {
 	const {
 		openLinksInNewTab,
 		embedFontSize,
@@ -119,18 +126,21 @@ export const BlueskyEmbed: FC<BlueskyEmbedProps> = ({embed}) => {
 	const marginTop = 2 * grid;
 
 	const [revealed, setRevealed] = useState(false);
-	const onReveal = useCallback((ev?: MouseEvent) => {
-		if (!revealed) {
-			ev?.preventDefault();
-			ev?.stopPropagation();
-			setRevealed(true);
-		}
-	}, [revealed]);
+	const onReveal = useCallback(
+		(ev?: MouseEvent) => {
+			if (!revealed) {
+				ev?.preventDefault();
+				ev?.stopPropagation();
+				setRevealed(true);
+			}
+		},
+		[revealed],
+	);
 
 	switch (embed.$type) {
 		case "app.bsky.embed.images#view": {
 			return (
-				<div style={{width: "100%", marginTop}}>
+				<div style={{ width: "100%", marginTop }}>
 					<BlueskyImages image={embed as AppBskyEmbedImages.View} />
 				</div>
 			);
@@ -154,7 +164,7 @@ export const BlueskyEmbed: FC<BlueskyEmbedProps> = ({embed}) => {
 
 		case "app.bsky.embed.external#view": {
 			const external = embed as AppBskyEmbedExternal.View;
-			const {title, description, thumb, uri} = external.external;
+			const { title, description, thumb, uri } = external.external;
 			const youtubeEmbedUrl = getYoutubeEmbedUrl(uri);
 			const host = getUrlHost(uri);
 			return (
@@ -172,7 +182,7 @@ export const BlueskyEmbed: FC<BlueskyEmbedProps> = ({embed}) => {
 						...commonStyles(borderColor),
 					}}
 				>
-					{thumb &&
+					{thumb && (
 						<div
 							onClick={youtubeEmbedUrl ? onReveal : undefined}
 							style={{
@@ -185,7 +195,7 @@ export const BlueskyEmbed: FC<BlueskyEmbedProps> = ({embed}) => {
 								backgroundSize: "cover",
 							}}
 						>
-							{youtubeEmbedUrl && revealed &&
+							{youtubeEmbedUrl && revealed && (
 								<iframe
 									src={youtubeEmbedUrl}
 									title={title}
@@ -197,54 +207,62 @@ export const BlueskyEmbed: FC<BlueskyEmbedProps> = ({embed}) => {
 										border: 0,
 									}}
 								/>
-							}
-							{youtubeEmbedUrl && !revealed &&
-								<div style={{
-									width: "100%",
-									height: "100%",
-									display: "flex",
-									alignItems: "center",
-									justifyContent: "center",
-									background: "rgba(100, 100, 100, 0.4)",
-								}}>
+							)}
+							{youtubeEmbedUrl && !revealed && (
+								<div
+									style={{
+										width: "100%",
+										height: "100%",
+										display: "flex",
+										alignItems: "center",
+										justifyContent: "center",
+										background: "rgba(100, 100, 100, 0.4)",
+									}}
+								>
 									<BlueskyPlayIcon />
 								</div>
-							}
+							)}
 						</div>
-					}
-					<div style={{
-						display: "flex",
-						flexDirection: "column",
-						gap: grid / 2,
-						padding: grid,
-					}}>
-						{title &&
-							<div style={{
-								fontWeight: titleFontWeight,
-							}}>
+					)}
+					<div
+						style={{
+							display: "flex",
+							flexDirection: "column",
+							gap: grid / 2,
+							padding: grid,
+						}}
+					>
+						{title && (
+							<div
+								style={{
+									fontWeight: titleFontWeight,
+								}}
+							>
 								{title}
 							</div>
-						}
-						{description &&
-							<div style={{fontSize: embedFontSize}}>
+						)}
+						{description && (
+							<div style={{ fontSize: embedFontSize }}>
 								{description}
 							</div>
-						}
-						{host &&
-							<div style={{
-								display: "flex",
-								alignItems: "center",
-								gap: grid / 2,
-								borderTop: `1px solid ${borderColor}`,
-								fontSize: "0.7rem",
-								marginTop: grid / 2,
-								paddingTop: grid / 2,
-								opacity: 0.6,
-							}}>
+						)}
+						{host && (
+							<div
+								style={{
+									display: "flex",
+									alignItems: "center",
+									gap: grid / 2,
+									borderTop: `1px solid ${borderColor}`,
+									fontSize: "0.7rem",
+									marginTop: grid / 2,
+									paddingTop: grid / 2,
+									opacity: 0.6,
+								}}
+							>
 								<BlueskyWorldIcon />
 								{host}
 							</div>
-						}
+						)}
 					</div>
 				</a>
 			);
@@ -254,4 +272,4 @@ export const BlueskyEmbed: FC<BlueskyEmbedProps> = ({embed}) => {
 			return null;
 		}
 	}
-}
+};

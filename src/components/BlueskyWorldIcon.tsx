@@ -2,14 +2,9 @@ import React, { FC } from "react";
 import { useBlueskyConfig } from "../hooks/useBlueskyConfig";
 
 export const BlueskyWorldIcon: FC = () => {
-	const {textSecondaryColor} = useBlueskyConfig();
+	const { textSecondaryColor } = useBlueskyConfig();
 	return (
-		<svg
-			fill="none"
-			viewBox="0 0 24 24"
-			width="12"
-			height="12"
-		>
+		<svg fill="none" viewBox="0 0 24 24" width="12" height="12">
 			<path
 				fill={textSecondaryColor}
 				fillRule="evenodd"
@@ -18,4 +13,4 @@ export const BlueskyWorldIcon: FC = () => {
 			/>
 		</svg>
 	);
-}
+};

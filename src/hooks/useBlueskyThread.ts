@@ -10,12 +10,15 @@ export const useBlueskyThread = (
 	postId: string,
 	depth: number = 0,
 ) => {
-	const callback = useCallback(async (client: BlueskyClient) => {
-		const result = await client.getPostThread({
-			uri: `at://${userHandle}/app.bsky.feed.post/${postId}`,
-			depth,
-		});
-		return result.data.thread;
-	}, [userHandle, postId, depth]);
+	const callback = useCallback(
+		async (client: BlueskyClient) => {
+			const result = await client.getPostThread({
+				uri: `at://${userHandle}/app.bsky.feed.post/${postId}`,
+				depth,
+			});
+			return result.data.thread;
+		},
+		[userHandle, postId, depth],
+	);
 	return useBlueskyFetch<BlueskyPostData>(callback);
-}
+};

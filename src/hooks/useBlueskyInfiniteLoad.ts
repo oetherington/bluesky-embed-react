@@ -14,14 +14,19 @@ export const useBlueskyInfiniteLoad = (pageSize: number = 10) => {
 		if (!ref) {
 			return;
 		}
-		const observer = new IntersectionObserver((entries) => {
-			if (entries[0]?.isIntersecting) {
-				setLimit((limit) => limit + pageSize);
-			}
-		}, {threshold: 1.0});
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (entries[0]?.isIntersecting) {
+					setLimit((limit) => limit + pageSize);
+				}
+			},
+			{ threshold: 1.0 },
+		);
 		observer.observe(ref);
-		return () => { observer.disconnect() };
+		return () => {
+			observer.disconnect();
+		};
 	}, [ref, pageSize]);
 
-	return {limit, setRef};
-}
+	return { limit, setRef };
+};

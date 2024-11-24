@@ -15,8 +15,8 @@ const meta: Meta = {
 	title: "Bluesky Profile Post",
 	component: BlueskyProfilePostsComponent,
 	argTypes: {
-		formatShortDate: {table: {disable: true}},
-		formatLongDate: {table: {disable: true}},
+		formatShortDate: { table: { disable: true } },
+		formatLongDate: { table: { disable: true } },
 	},
 };
 
@@ -45,6 +45,6 @@ const createProfilePostsStory = (userHandle: string, pageSize?: number) => {
 		openLinksInNewTab: true,
 	};
 	return story;
-}
+};
 
 export const BlueskyProfilePosts = createProfilePostsStory("bsky.app");

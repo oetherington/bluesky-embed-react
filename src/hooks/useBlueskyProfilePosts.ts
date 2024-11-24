@@ -10,13 +10,16 @@ export const useBlueskyProfilePosts = (
 	limit: number = 10,
 	cursor?: string,
 ) => {
-	const callback = useCallback(async (client: BlueskyClient) => {
-		const result = await client.getAuthorFeed({
-			actor: userHandle,
-			limit,
-			cursor,
-		});
-		return result.data;
-	}, [userHandle, limit, cursor]);
+	const callback = useCallback(
+		async (client: BlueskyClient) => {
+			const result = await client.getAuthorFeed({
+				actor: userHandle,
+				limit,
+				cursor,
+			});
+			return result.data;
+		},
+		[userHandle, limit, cursor],
+	);
 	return useBlueskyFetch<BlueskyProfilePostsData>(callback);
-}
+};

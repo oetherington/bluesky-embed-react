@@ -15,8 +15,8 @@ const meta: Meta = {
 	title: "Bluesky Post",
 	component: BlueskyPostComponent,
 	argTypes: {
-		formatShortDate: {table: {disable: true}},
-		formatLongDate: {table: {disable: true}},
+		formatShortDate: { table: { disable: true } },
+		formatLongDate: { table: { disable: true } },
 	},
 };
 
@@ -39,7 +39,7 @@ const createPostStory = (userHandle: string, postId: string) => {
 		openLinksInNewTab: true,
 	};
 	return story;
-}
+};
 
 export const BlueskyPost = createPostStory("bsky.app", "3l6oveex3ii2l");
 export const BlueskySingleImagePost = createPostStory("bsky.app", "3lb6vz4ms6c25");

@@ -13,12 +13,12 @@ export const useBlueskyShimmer = () => {
 			document.head.appendChild(style);
 		}
 	}, []);
-	const {loadingShimmer} = useBlueskyConfig();
+	const { loadingShimmer } = useBlueskyConfig();
 	const shimmerStyles: CSSProperties = {
 		background: loadingShimmer,
 		backgroundSize: "300%",
 		backgroundPositionX: "100%",
 		animation: `${name} 1.5s infinite linear`,
 	};
-	return {shimmerStyles};
-}
+	return { shimmerStyles };
+};

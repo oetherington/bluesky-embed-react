@@ -1,9 +1,9 @@
 import type { CSSProperties } from "react";
 
 export type BlueskyListPosition = {
-	index: number,
-	total: number,
-}
+	index: number;
+	total: number;
+};
 
 export const getBlueskyListStyles = (
 	listPosition: BlueskyListPosition | undefined,
@@ -11,7 +11,7 @@ export const getBlueskyListStyles = (
 ): CSSProperties => {
 	const listStyles: CSSProperties = {};
 	if (listPosition) {
-		const {index, total} = listPosition;
+		const { index, total } = listPosition;
 		if (index === 0) {
 			listStyles.borderTopLeftRadius = borderRadius;
 			listStyles.borderTopRightRadius = borderRadius;
@@ -27,7 +27,7 @@ export const getBlueskyListStyles = (
 		listStyles.borderRadius = borderRadius;
 	}
 	return listStyles;
-}
+};
 
 export const getBlueskyProfileUrl = (app: string, userHandleOrDid: string) =>
 	`${app}/profile/${userHandleOrDid}`;
@@ -36,9 +36,7 @@ export const getBlueskyTagUrl = (app: string, tagName: string) =>
 	`${app}/hashtag/${tagName}`;
 
 export const getBlueskyLinkProps = (openLinksInNewTab: boolean) =>
-	openLinksInNewTab
-		? {target: "_blank", rel: "noopener noreferrer"}
-		: {};
+	openLinksInNewTab ? { target: "_blank", rel: "noopener noreferrer" } : {};
 
 export const formatBlueskyShortDate = (dateString: string) => {
 	const now = new Date().getTime();
@@ -65,7 +63,7 @@ export const formatBlueskyShortDate = (dateString: string) => {
 		return `${Math.floor(interval)}m`;
 	}
 	return `${Math.floor(seconds)}s`;
-}
+};
 
 export const formatBlueskyLongDate = (dateString: string) => {
 	const date = new Date(dateString);
@@ -79,4 +77,4 @@ export const formatBlueskyLongDate = (dateString: string) => {
 		minute: "numeric",
 	});
 	return `${day} at ${time}`;
-}
+};

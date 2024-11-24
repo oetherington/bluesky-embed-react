@@ -1,30 +1,30 @@
-import React, { createContext, FC, ReactNode, useContext } from "react"
+import React, { createContext, FC, ReactNode, useContext } from "react";
 import { formatBlueskyLongDate, formatBlueskyShortDate } from "../helpers";
 
 export type BlueskyConfig = {
-	app: string,
-	service: string,
-	openLinksInNewTab: boolean,
-	avatarSize: number,
-	hideAvatars: boolean,
-	hideEmbeds: boolean,
-	textPrimaryColor: string,
-	textSecondaryColor: string,
-	backgroundColor: string,
-	borderColor: string,
-	loadingShimmer: string,
-	fontFamily: string,
-	fontSize: string | number,
-	embedFontSize: string | number,
-	fontWeight: string | number,
-	titleFontWeight: string | number,
-	lineHeight: string | number,
-	grid: number,
-	borderRadius: number | string,
-	width: number | string,
-	formatShortDate: (dateString: string) => string,
-	formatLongDate: (dateString: string) => string,
-}
+	app: string;
+	service: string;
+	openLinksInNewTab: boolean;
+	avatarSize: number;
+	hideAvatars: boolean;
+	hideEmbeds: boolean;
+	textPrimaryColor: string;
+	textSecondaryColor: string;
+	backgroundColor: string;
+	borderColor: string;
+	loadingShimmer: string;
+	fontFamily: string;
+	fontSize: string | number;
+	embedFontSize: string | number;
+	fontWeight: string | number;
+	titleFontWeight: string | number;
+	lineHeight: string | number;
+	grid: number;
+	borderRadius: number | string;
+	width: number | string;
+	formatShortDate: (dateString: string) => string;
+	formatLongDate: (dateString: string) => string;
+};
 
 export const defaultBlueskyConfig: BlueskyConfig = {
 	app: "https://bsky.app",
@@ -49,23 +49,25 @@ export const defaultBlueskyConfig: BlueskyConfig = {
 	width: 600,
 	formatShortDate: formatBlueskyShortDate,
 	formatLongDate: formatBlueskyLongDate,
-}
+};
 
 const blueskyConfigContext = createContext<BlueskyConfig>(defaultBlueskyConfig);
 
 export type BlueskyConfigProviderProps = Partial<BlueskyConfig> & {
-	children: ReactNode,
-}
+	children: ReactNode;
+};
 
 export const BlueskyConfigProvider: FC<BlueskyConfigProviderProps> = ({
 	children,
 	...config
 }) => {
 	return (
-		<blueskyConfigContext.Provider value={{...defaultBlueskyConfig, ...config}}>
+		<blueskyConfigContext.Provider
+			value={{ ...defaultBlueskyConfig, ...config }}
+		>
 			{children}
 		</blueskyConfigContext.Provider>
 	);
-}
+};
 
-export const useBlueskyConfig = () =>  useContext(blueskyConfigContext);
+export const useBlueskyConfig = () => useContext(blueskyConfigContext);

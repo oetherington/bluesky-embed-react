@@ -13,10 +13,10 @@ import type { AppBskyFeedDefs, AppBskyFeedPost } from "@atproto/api";
 import { BlueskyPostLayout } from "./BlueskyPostLayout";
 
 export type BlueskyPostDisplayProps = {
-	profile: BlueskyProfileData,
-	post: AppBskyFeedDefs.PostView,
-	listPosition?: BlueskyListPosition,
-}
+	profile: BlueskyProfileData;
+	post: AppBskyFeedDefs.PostView;
+	listPosition?: BlueskyListPosition;
+};
 
 const decorationHandler = (
 	value: "underline" | "none",
@@ -24,7 +24,7 @@ const decorationHandler = (
 ) => {
 	const target = ev.target as HTMLAnchorElement;
 	target.style.textDecoration = value;
-}
+};
 
 export const BlueskyPostDisplay: FC<BlueskyPostDisplayProps> = ({
 	profile,
@@ -72,11 +72,11 @@ export const BlueskyPostDisplay: FC<BlueskyPostDisplayProps> = ({
 					>
 						{profile.displayName}
 					</a>
-					<span style={{color: textSecondaryColor, fontWeight}}>
+					<span style={{ color: textSecondaryColor, fontWeight }}>
 						@{profile.handle} ·{" "}
 						<abbr
 							title={formatLongDate(post.createdAt)}
-							style={{textDecoration: "none"}}
+							style={{ textDecoration: "none" }}
 						>
 							{formatShortDate(post.createdAt)}
 						</abbr>
@@ -92,4 +92,4 @@ export const BlueskyPostDisplay: FC<BlueskyPostDisplayProps> = ({
 			listPosition={listPosition}
 		/>
 	);
-}
+};

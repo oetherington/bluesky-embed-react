@@ -6,26 +6,24 @@ import { BlueskyPostDisplay } from "./BlueskyPostDisplay";
 import type { AppBskyFeedDefs } from "@atproto/api";
 
 export type BlueskyPostProps = {
-	userHandle: string,
-	postId: string,
-}
+	userHandle: string;
+	postId: string;
+};
 
-export const BlueskyPost: FC<BlueskyPostProps> = ({userHandle, postId}) => {
+export const BlueskyPost: FC<BlueskyPostProps> = ({ userHandle, postId }) => {
 	const {
 		value: thread,
 		loading: threadLoading,
 		error: threadError,
 	} = useBlueskyThread(userHandle, postId);
-	const {value: profile} = useBlueskyProfile(userHandle);
+	const { value: profile } = useBlueskyProfile(userHandle);
 
 	if (threadError) {
 		return null;
 	}
 
 	if (threadLoading || !thread?.post || !profile) {
-		return (
-			<BlueskyPostLoading />
-		);
+		return <BlueskyPostLoading />;
 	}
 
 	return (
@@ -34,4 +32,4 @@ export const BlueskyPost: FC<BlueskyPostProps> = ({userHandle, postId}) => {
 			post={thread.post as AppBskyFeedDefs.PostView}
 		/>
 	);
-}
+};

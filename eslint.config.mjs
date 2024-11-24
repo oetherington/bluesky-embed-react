@@ -10,10 +10,7 @@ export default tseslint.config(
 		languageOptions: {
 			parserOptions: {
 				projectService: {
-					allowDefaultProject: [
-						"eslint.config.mjs",
-						".storybook/*.js",
-					],
+					allowDefaultProject: ["eslint.config.mjs", ".storybook/*.js"],
 				},
 				tsconfigRootDir: import.meta.dirname,
 			},
