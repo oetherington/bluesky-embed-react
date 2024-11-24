@@ -23,7 +23,8 @@
 	"scripts": {
 		"prepare": "husky",
 		"lint": "eslint",
-		"tsc": "tsc --noEmit --skipLibCheck",
+		"tsc": "tsc --skipLibCheck --noEmit",
+		"build": "tsc --skipLibCheck --project tsconfig.build.json",
 		"check-format": "prettier --check .",
 		"format": "prettier . --write --log-level warn",
 		"storybook": "storybook dev -p 6006 --no-open",
