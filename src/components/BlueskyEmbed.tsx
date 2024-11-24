@@ -1,4 +1,11 @@
-import React, { CSSProperties, FC, MouseEvent, useCallback, useState } from "react";
+import React, {
+	CSSProperties,
+	FC,
+	MouseEvent,
+	useCallback,
+	useRef,
+	useState,
+} from "react";
 import type {
 	AppBskyEmbedDefs,
 	AppBskyEmbedExternal,
@@ -11,6 +18,7 @@ import { useBlueskyConfig } from "../hooks/useBlueskyConfig";
 import { getBlueskyLinkProps } from "../helpers";
 import { BlueskyPlayIcon } from "./BlueskyPlayIcon";
 import { BlueskyWorldIcon } from "./BlueskyWorldIcon";
+import { useBlueskyHLS } from "../hooks/useBlueskyHLS";
 
 export type BlueskyEmbedData =
 	| AppBskyEmbedImages.View
@@ -112,6 +120,39 @@ const BlueskyImages: FC<{ image: AppBskyEmbedImages.View }> = ({
 	}
 };
 
+const BlueskyVideo: FC<{ video: AppBskyEmbedVideo.View }> = ({ video }) => {
+	const { borderColor } = useBlueskyConfig();
+	const videoRef = useRef<HTMLVideoElement>(null);
+	const [_hasSubtitleTrack, setHasSubtitleTrack] = useState(false);
+	const [_hlsLoading, setHlsLoading] = useState(false);
+	const [error, setError] = useState<Error | null>(null);
+
+	useBlueskyHLS({
+		playlist: video.playlist,
+		setHasSubtitleTrack,
+		setError,
+		videoRef,
+		setHlsLoading,
+	});
+
+	if (error) {
+		console.error("Video embed error", error);
+		return null;
+	}
+
+	return (
+		<video
+			ref={videoRef}
+			title={video.alt}
+			poster={video.thumbnail}
+			style={commonStyles(borderColor, video.aspectRatio)}
+			preload="none"
+			playsInline
+			controls
+		/>
+	);
+};
+
 export const BlueskyEmbed: FC<BlueskyEmbedProps> = ({ embed }) => {
 	const {
 		openLinksInNewTab,
@@ -147,18 +188,10 @@ export const BlueskyEmbed: FC<BlueskyEmbedProps> = ({ embed }) => {
 		}
 
 		case "app.bsky.embed.video#view": {
-			const video = embed as AppBskyEmbedVideo.View;
 			return (
-				<video
-					controls
-					src={video.playlist}
-					poster={video.thumbnail}
-					title={video.alt}
-					style={{
-						marginTop,
-						...commonStyles(borderColor, video.aspectRatio),
-					}}
-				/>
+				<div style={{ width: "100%", marginTop }}>
+					<BlueskyVideo video={embed as AppBskyEmbedVideo.View} />
+				</div>
 			);
 		}
 

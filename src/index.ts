@@ -2,6 +2,7 @@ export * from "./helpers";
 export * from "./hooks/useBlueskyClient";
 export * from "./hooks/useBlueskyConfig";
 export * from "./hooks/useBlueskyFetch";
+export * from "./hooks/useBlueskyHLS";
 export * from "./hooks/useBlueskyProfile";
 export * from "./hooks/useBlueskyThread";
 export * from "./components/BlueskyAvatar";

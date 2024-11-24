@@ -78,3 +78,5 @@ export const formatBlueskyLongDate = (dateString: string) => {
 	});
 	return `${day} at ${time}`;
 };
+
+export class BlueskyError extends Error {}
