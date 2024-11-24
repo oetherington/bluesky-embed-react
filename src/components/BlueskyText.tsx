@@ -14,7 +14,7 @@ export const BlueskyText: FC<BlueskyTextProps> = ({text}) => {
 	const [segments, setSegments] = useState<RichTextSegment[]>([]);
 
 	useEffect(() => {
-		(async () => {
+		void (async () => {
 			const rt = new RichText({text});
 			await rt.detectFacets(client);
 			setSegments(Array.from(rt.segments()));

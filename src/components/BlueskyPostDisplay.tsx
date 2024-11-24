@@ -1,4 +1,4 @@
-import React, { FC, MouseEvent } from "react";
+import React, { FC, MouseEvent, useCallback } from "react";
 import {
 	BlueskyListPosition,
 	getBlueskyLinkProps,
@@ -47,15 +47,22 @@ export const BlueskyPostDisplay: FC<BlueskyPostDisplayProps> = ({
 	const post = post_.record as AppBskyFeedPost.Record;
 	const embed = post_.embed;
 
+	const onMouseOverTitle = useCallback((ev: MouseEvent<HTMLAnchorElement>) => {
+		decorationHandler("underline", ev);
+	}, []);
+	const onMouseOutTitle = useCallback((ev: MouseEvent<HTMLAnchorElement>) => {
+		decorationHandler("none", ev);
+	}, []);
+
 	return (
 		<BlueskyPostLayout
 			avatar={<BlueskyAvatar profile={profile} />}
 			header={
 				<>
 					<a
-						href={getBlueskyProfileUrl(app, profile?.handle ?? "")}
-						onMouseOver={decorationHandler.bind(null, "underline")}
-						onMouseOut={decorationHandler.bind(null, "none")}
+						href={getBlueskyProfileUrl(app, profile.handle)}
+						onMouseOver={onMouseOverTitle}
+						onMouseOut={onMouseOutTitle}
 						style={{
 							textDecoration: "none",
 							color: textPrimaryColor,
@@ -63,10 +70,10 @@ export const BlueskyPostDisplay: FC<BlueskyPostDisplayProps> = ({
 						}}
 						{...getBlueskyLinkProps(openLinksInNewTab)}
 					>
-						{profile?.displayName}
+						{profile.displayName}
 					</a>
 					<span style={{color: textSecondaryColor, fontWeight}}>
-						@{profile?.handle} ·{" "}
+						@{profile.handle} ·{" "}
 						<abbr
 							title={formatLongDate(post.createdAt)}
 							style={{textDecoration: "none"}}

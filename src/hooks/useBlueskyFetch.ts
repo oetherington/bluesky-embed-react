@@ -6,7 +6,8 @@ export const useBlueskyFetch = <T>(
 ) => {
 	const client = useBlueskyClient();
 	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState<Error | null>(null);
+	// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
+	const [error, setError] = useState<unknown | null>(null);
 	const [value, setValue] = useState<T | null>(null);
 
 	const refetch = useCallback(async () => {

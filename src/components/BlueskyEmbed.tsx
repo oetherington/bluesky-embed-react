@@ -35,7 +35,7 @@ const commonStyles = (
 });
 
 const getYoutubeEmbedUrl = (url: string): string | null => {
-	const result = url.match(/(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/user\/\S+|\/ytscreeningroom\?v=))([\w\-]{10,12})\b/);
+	const result = url.match(/(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/user\/\S+|\/ytscreeningroom\?v=))([\w-]{10,12})\b/);
 	return result ? `https://www.youtube.com/embed/${result[1]}?autoplay=1` : null;
 }
 
@@ -58,7 +58,7 @@ const BlueskyImages: FC<{image: AppBskyEmbedImages.View}> = ({
 		case 0:
 			return null;
 
-		case 1:
+		case 1: {
 			const image = images[0];
 			return (
 				<a href={image.fullsize} {...linkProps}>
@@ -70,8 +70,9 @@ const BlueskyImages: FC<{image: AppBskyEmbedImages.View}> = ({
 					/>
 				</a>
 			);
+		}
 
-		default:
+		default: {
 			return (
 				<div style={{
 					display: "flex",
@@ -100,6 +101,7 @@ const BlueskyImages: FC<{image: AppBskyEmbedImages.View}> = ({
 					))}
 				</div>
 			);
+		}
 	}
 }
 
@@ -126,14 +128,15 @@ export const BlueskyEmbed: FC<BlueskyEmbedProps> = ({embed}) => {
 	}, [revealed]);
 
 	switch (embed.$type) {
-		case "app.bsky.embed.images#view":
+		case "app.bsky.embed.images#view": {
 			return (
 				<div style={{width: "100%", marginTop}}>
 					<BlueskyImages image={embed as AppBskyEmbedImages.View} />
 				</div>
 			);
+		}
 
-		case "app.bsky.embed.video#view":
+		case "app.bsky.embed.video#view": {
 			const video = embed as AppBskyEmbedVideo.View;
 			return (
 				<video
@@ -147,8 +150,9 @@ export const BlueskyEmbed: FC<BlueskyEmbedProps> = ({embed}) => {
 					}}
 				/>
 			);
+		}
 
-		case "app.bsky.embed.external#view":
+		case "app.bsky.embed.external#view": {
 			const external = embed as AppBskyEmbedExternal.View;
 			const {title, description, thumb, uri} = external.external;
 			const youtubeEmbedUrl = getYoutubeEmbedUrl(uri);
@@ -244,8 +248,10 @@ export const BlueskyEmbed: FC<BlueskyEmbedProps> = ({embed}) => {
 					</div>
 				</a>
 			);
+		}
 
-		default:
+		default: {
 			return null;
+		}
 	}
 }

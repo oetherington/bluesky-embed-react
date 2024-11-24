@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 const pageSizeToLimit = (pageSize?: number) => Math.max(pageSize ?? 10, 1);
 
 export const useBlueskyInfiniteLoad = (pageSize: number = 10) => {
-	const [limit, setLimit] = useState<number>(pageSizeToLimit.bind(null, pageSize));
+	const [limit, setLimit] = useState<number>(() => pageSizeToLimit(pageSize));
 	const [ref, setRef] = useState<HTMLDivElement | null>(null);
 
 	useEffect(() => {
@@ -20,7 +20,7 @@ export const useBlueskyInfiniteLoad = (pageSize: number = 10) => {
 			}
 		}, {threshold: 1.0});
 		observer.observe(ref);
-		return () => observer.disconnect();
+		return () => { observer.disconnect() };
 	}, [ref, pageSize]);
 
 	return {limit, setRef};
