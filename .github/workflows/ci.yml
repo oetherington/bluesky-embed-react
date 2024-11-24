@@ -9,6 +9,8 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
+            - name: Setup Environment
+              uses: ./.github/actions/setupEnvironment
             - name: Run Eslint
               run: npm run lint
 
@@ -17,6 +19,8 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
+            - name: Setup Environment
+              uses: ./.github/actions/setupEnvironment
             - name: Run Typescript
               run: npm run tsc
 
@@ -25,5 +29,7 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
+            - name: Setup Environment
+              uses: ./.github/actions/setupEnvironment
             - name: Run Prettier
               run: npm run check-format
