@@ -23,6 +23,7 @@
 	"scripts": {
 		"lint": "eslint",
 		"tsc": "tsc --noEmit --skipLibCheck",
+		"check-format": "prettier --check .",
 		"format": "prettier . --write",
 		"storybook": "storybook dev -p 6006 --no-open",
 		"build-storybook": "storybook build"

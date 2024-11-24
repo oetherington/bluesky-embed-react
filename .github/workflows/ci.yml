@@ -9,7 +9,7 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
-            - name: Run linter
+            - name: Run Eslint
               run: npm run lint
 
     runTypecheck:
@@ -19,3 +19,11 @@ jobs:
               uses: actions/checkout@v4
             - name: Run Typescript
               run: npm run tsc
+
+    runFormatter:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+            - name: Run Prettier
+              run: npm run check-format
