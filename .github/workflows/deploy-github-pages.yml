@@ -1,0 +1,24 @@
+name: Deploy Storybook to GitHub Pages
+on:
+    push:
+        branches:
+            - "main"
+permissions:
+    contents: read
+    pages: write
+    id-token: write
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+            - name: Setup environment
+              uses: ./.github/actions/setupEnvironment
+            - name: Deploy storybook
+              uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
+              with:
+                  install_command: npm ci
+                  build_command: npm run build-storybook
+                  path: storybook-static
+                  checkout: false
