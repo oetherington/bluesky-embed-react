@@ -1,6 +1,7 @@
 import React, { createContext, FC, ReactNode, useContext } from "react";
 import { formatBlueskyLongDate, formatBlueskyShortDate } from "../helpers";
 
+// When updating this type or the defaults below be sure to also update the README
 export type BlueskyConfig = {
 	app: string;
 	service: string;
