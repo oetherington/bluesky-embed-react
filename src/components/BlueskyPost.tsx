@@ -1,10 +1,12 @@
 import React, { FC, MouseEvent } from "react";
 import { getBlueskyLinkProps, getBlueskyProfileUrl } from "../helpers";
-import { useBlueskyPost } from "../hooks/useBlueskyPost";
+import { useBlueskyThread } from "../hooks/useBlueskyThread";
 import { useBlueskyProfile } from "../hooks/useBlueskyProfile";
 import { BlueskyText } from "./BlueskyText";
 import { BlueskyAvatar } from "./BlueskyAvatar";
 import { useBlueskyConfig } from "../hooks/useBlueskyConfig";
+import { BlueskyEmbed, BlueskyEmbedData } from "./BlueskyEmbed";
+import { AppBskyFeedPost } from "@atproto/api";
 
 export type BlueskyPostProps = {
 	userHandle: string,
@@ -24,6 +26,7 @@ export const BlueskyPost: FC<BlueskyPostProps> = ({userHandle, postId}) => {
 		app,
 		openLinksInNewTab,
 		hideAvatars,
+		hideEmbeds,
 		textPrimaryColor,
 		textSecondaryColor,
 		backgroundColor,
@@ -38,17 +41,20 @@ export const BlueskyPost: FC<BlueskyPostProps> = ({userHandle, postId}) => {
 		formatLongDate,
 	} = useBlueskyConfig();
 	const {
-		value: post,
-		loading: postLoading,
-		error: postError,
-	} = useBlueskyPost(userHandle, postId);
+		value: thread,
+		loading: threadLoading,
+		error: threadError,
+	} = useBlueskyThread(userHandle, postId);
 	const {value: profile} = useBlueskyProfile(userHandle);
-	console.log(post);
 
-	if (postLoading || postError || !post) {
+	if (threadLoading || threadError || !thread?.post) {
 		// TODO
 		return null;
 	}
+
+	// TODO: Janky types
+	const post: AppBskyFeedPost.Record = (thread.post as any).record;
+	const embed: BlueskyEmbedData | undefined = (thread.post as any).embed;
 
 	return (
 		<div style={{
@@ -64,7 +70,7 @@ export const BlueskyPost: FC<BlueskyPostProps> = ({userHandle, postId}) => {
 			width,
 		}}>
 			{!hideAvatars && <BlueskyAvatar profile={profile} />}
-			<div>
+			<div style={{minWidth: 0}}>
 				<div style={{
 					display: "flex",
 					gap: grid,
@@ -94,6 +100,7 @@ export const BlueskyPost: FC<BlueskyPostProps> = ({userHandle, postId}) => {
 					</span>
 				</div>
 				<BlueskyText text={post.text} />
+				{embed && !hideEmbeds && <BlueskyEmbed embed={embed} />}
 			</div>
 		</div>
 	);
