@@ -10,6 +10,7 @@ import type {
 import { useBlueskyConfig } from "../hooks/useBlueskyConfig";
 import { getBlueskyLinkProps } from "../helpers";
 import { BlueskyPlayIcon } from "./BlueskyPlayIcon";
+import { BlueskyWorldIcon } from "./BlueskyWorldIcon";
 
 export type BlueskyEmbedData =
 	| AppBskyEmbedImages.View
@@ -33,9 +34,18 @@ const commonStyles = (
 	aspectRatio: aspect ? `${aspect.width} / ${aspect.height}` : undefined,
 });
 
-const getYoutubeEmbedUrl = (uri: string) => {
-	const result = uri.match(/(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/user\/\S+|\/ytscreeningroom\?v=))([\w\-]{10,12})\b/);
+const getYoutubeEmbedUrl = (url: string): string | null => {
+	const result = url.match(/(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/user\/\S+|\/ytscreeningroom\?v=))([\w\-]{10,12})\b/);
 	return result ? `https://www.youtube.com/embed/${result[1]}?autoplay=1` : null;
+}
+
+const getUrlHost = (url: string): string | null => {
+	try {
+		const host = new URL(url).hostname;
+		return host.replace("www.", "");
+	} catch (_e) {
+		return null;
+	}
 }
 
 const BlueskyImages: FC<{image: AppBskyEmbedImages.View}> = ({
@@ -142,6 +152,7 @@ export const BlueskyEmbed: FC<BlueskyEmbedProps> = ({embed}) => {
 			const external = embed as AppBskyEmbedExternal.View;
 			const {title, description, thumb, uri} = external.external;
 			const youtubeEmbedUrl = getYoutubeEmbedUrl(uri);
+			const host = getUrlHost(uri);
 			return (
 				<a
 					href={uri}
@@ -213,6 +224,21 @@ export const BlueskyEmbed: FC<BlueskyEmbedProps> = ({embed}) => {
 						{description &&
 							<div style={{fontSize: embedFontSize}}>
 								{description}
+							</div>
+						}
+						{host &&
+							<div style={{
+								display: "flex",
+								alignItems: "center",
+								gap: grid / 2,
+								borderTop: `1px solid ${borderColor}`,
+								fontSize: "0.7rem",
+								marginTop: grid / 2,
+								paddingTop: grid / 2,
+								opacity: 0.6,
+							}}>
+								<BlueskyWorldIcon />
+								{host}
 							</div>
 						}
 					</div>

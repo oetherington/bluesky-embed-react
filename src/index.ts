@@ -10,3 +10,4 @@ export * from "./components/BlueskyPlayIcon";
 export * from "./components/BlueskyPost";
 export * from "./components/BlueskySegment";
 export * from "./components/BlueskyText";
+export * from "./components/BlueskyWorldIcon";
