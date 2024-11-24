@@ -12,7 +12,7 @@ import {
 import "./story.css";
 
 const meta: Meta = {
-	title: "Bluesky Profile Post",
+	title: "Bluesky Profile Posts",
 	component: BlueskyProfilePostsComponent,
 	argTypes: {
 		formatShortDate: { table: { disable: true } },
