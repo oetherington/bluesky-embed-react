@@ -1,6 +1,6 @@
 # Bluesky Embed React
 
-[![Storybook](https://cdn.jsdelivr.net/gh/storybooks/brand@master/badge/badge-storybook.svg)](https://oetherington.github.io/bluesky-embed-react/) ![CI](https://github.com/oetherington/bluesky-embed-react/actions/workflows/ci.yml/badge.svg) [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://raw.githubusercontent.com/oetherington/bluesky-embed-react/refs/heads/main/COPYING)
+[![Storybook](https://cdn.jsdelivr.net/gh/storybooks/brand@master/badge/badge-storybook.svg)](https://etherington.xyz/bluesky-embed-react) ![CI](https://github.com/oetherington/bluesky-embed-react/actions/workflows/ci.yml/badge.svg) [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://raw.githubusercontent.com/oetherington/bluesky-embed-react/refs/heads/main/COPYING)
 
 Lightweight configurable React component for embedding posts, profiles and feeds
 from [Bluesky](https://bsky.app).
@@ -9,7 +9,7 @@ Bluesky Embed React is an independent project, not affiliated with Bluesky.
 
 ## Demo and Examples
 
-https://oetherington.github.io/bluesky-embed-react/
+https://etherington.xyz/bluesky-embed-react
 
 ## Install
 
