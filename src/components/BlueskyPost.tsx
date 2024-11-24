@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import { useBlueskyThread } from "../hooks/useBlueskyThread";
 import { useBlueskyProfile } from "../hooks/useBlueskyProfile";
+import { BlueskyPostLoading } from "./BlueskyPostLoading";
 import { BlueskyPostDisplay } from "./BlueskyPostDisplay";
 import type { AppBskyFeedDefs } from "@atproto/api";
 
@@ -17,9 +18,14 @@ export const BlueskyPost: FC<BlueskyPostProps> = ({userHandle, postId}) => {
 	} = useBlueskyThread(userHandle, postId);
 	const {value: profile} = useBlueskyProfile(userHandle);
 
-	if (threadLoading || threadError || !thread?.post || !profile) {
-		// TODO
+	if (threadError) {
 		return null;
+	}
+
+	if (threadLoading || !thread?.post || !profile) {
+		return (
+			<BlueskyPostLoading />
+		);
 	}
 
 	return (

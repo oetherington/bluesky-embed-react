@@ -22,17 +22,25 @@ const meta: Meta = {
 
 export default meta;
 
-const createProfilePostsStory = (userHandle: string) => {
+const createProfilePostsStory = (userHandle: string, pageSize?: number) => {
 	const story: StoryFn<BlueskyProfilePostsProps & BlueskyConfig> = ({
 		userHandle,
+		pageSize,
+		infiniteLoad,
 		...config
 	}) => (
 		<BlueskyConfigProvider {...config}>
-			<BlueskyProfilePostsComponent userHandle={userHandle} />
+			<BlueskyProfilePostsComponent
+				userHandle={userHandle}
+				pageSize={pageSize}
+				infiniteLoad={infiniteLoad}
+			/>
 		</BlueskyConfigProvider>
 	);
 	story.args = {
 		userHandle,
+		pageSize,
+		infiniteLoad: false,
 		...defaultBlueskyConfig,
 		openLinksInNewTab: true,
 	};

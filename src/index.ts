@@ -9,6 +9,8 @@ export * from "./components/BlueskyEmbed";
 export * from "./components/BlueskyPlayIcon";
 export * from "./components/BlueskyPost";
 export * from "./components/BlueskyPostDisplay";
+export * from "./components/BlueskyPostLayout";
+export * from "./components/BlueskyPostLoading";
 export * from "./components/BlueskyProfilePosts";
 export * from "./components/BlueskySegment";
 export * from "./components/BlueskyText";

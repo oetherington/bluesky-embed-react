@@ -1,16 +1,16 @@
-import React, { CSSProperties, FC, MouseEvent } from "react";
-import { getBlueskyLinkProps, getBlueskyProfileUrl } from "../helpers";
+import React, { FC, MouseEvent } from "react";
+import {
+	BlueskyListPosition,
+	getBlueskyLinkProps,
+	getBlueskyProfileUrl,
+} from "../helpers";
 import { useBlueskyConfig } from "../hooks/useBlueskyConfig";
 import { BlueskyAvatar } from "./BlueskyAvatar";
 import { BlueskyText } from "./BlueskyText";
 import { BlueskyEmbed } from "./BlueskyEmbed";
 import type { BlueskyProfileData } from "../hooks/useBlueskyProfile";
 import type { AppBskyFeedDefs, AppBskyFeedPost } from "@atproto/api";
-
-export type BlueskyListPosition = {
-	index: number,
-	total: number,
-}
+import { BlueskyPostLayout } from "./BlueskyPostLayout";
 
 export type BlueskyPostDisplayProps = {
 	profile: BlueskyProfileData,
@@ -34,18 +34,11 @@ export const BlueskyPostDisplay: FC<BlueskyPostDisplayProps> = ({
 	const {
 		app,
 		openLinksInNewTab,
-		hideAvatars,
 		hideEmbeds,
 		textPrimaryColor,
 		textSecondaryColor,
-		backgroundColor,
-		borderColor,
-		fontFamily,
 		fontWeight,
 		titleFontWeight,
-		grid,
-		borderRadius,
-		width,
 		formatShortDate,
 		formatLongDate,
 	} = useBlueskyConfig();
@@ -54,43 +47,11 @@ export const BlueskyPostDisplay: FC<BlueskyPostDisplayProps> = ({
 	const post = post_.record as AppBskyFeedPost.Record;
 	const embed = post_.embed;
 
-	const listStyles: CSSProperties = {};
-	if (listPosition) {
-		const {index, total} = listPosition;
-		if (index === 0) {
-			listStyles.borderTopLeftRadius = borderRadius;
-			listStyles.borderTopRightRadius = borderRadius;
-		} else if (index === total - 1) {
-			listStyles.borderBottomLeftRadius = borderRadius;
-			listStyles.borderBottomRightRadius = borderRadius;
-		}
-		if (index > 0) {
-			listStyles.borderTopWidth = 0;
-		}
-	} else {
-		listStyles.borderRadius = borderRadius;
-	}
-
 	return (
-		<div style={{
-			display: "flex",
-			gap: grid * 1.5,
-			padding: grid * 2,
-			backgroundColor,
-			border: `1px solid ${borderColor}`,
-			fontFamily,
-			minWidth: 0,
-			maxWidth: "100%",
-			width,
-			...listStyles,
-		}}>
-			{!hideAvatars && <BlueskyAvatar profile={profile} />}
-			<div style={{minWidth: 0}}>
-				<div style={{
-					display: "flex",
-					gap: grid,
-					marginBottom: grid,
-				}}>
+		<BlueskyPostLayout
+			avatar={<BlueskyAvatar profile={profile} />}
+			header={
+				<>
 					<a
 						href={getBlueskyProfileUrl(app, profile?.handle ?? "")}
 						onMouseOver={decorationHandler.bind(null, "underline")}
@@ -113,10 +74,15 @@ export const BlueskyPostDisplay: FC<BlueskyPostDisplayProps> = ({
 							{formatShortDate(post.createdAt)}
 						</abbr>
 					</span>
-				</div>
-				<BlueskyText text={post.text} />
-				{embed && !hideEmbeds && <BlueskyEmbed embed={embed} />}
-			</div>
-		</div>
+				</>
+			}
+			content={
+				<>
+					<BlueskyText text={post.text} />
+					{embed && !hideEmbeds && <BlueskyEmbed embed={embed} />}
+				</>
+			}
+			listPosition={listPosition}
+		/>
 	);
 }

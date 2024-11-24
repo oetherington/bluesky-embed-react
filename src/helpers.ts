@@ -1,3 +1,34 @@
+import type { CSSProperties } from "react";
+
+export type BlueskyListPosition = {
+	index: number,
+	total: number,
+}
+
+export const getBlueskyListStyles = (
+	listPosition: BlueskyListPosition | undefined,
+	borderRadius: string | number,
+): CSSProperties => {
+	const listStyles: CSSProperties = {};
+	if (listPosition) {
+		const {index, total} = listPosition;
+		if (index === 0) {
+			listStyles.borderTopLeftRadius = borderRadius;
+			listStyles.borderTopRightRadius = borderRadius;
+		}
+		if (index === total - 1) {
+			listStyles.borderBottomLeftRadius = borderRadius;
+			listStyles.borderBottomRightRadius = borderRadius;
+		}
+		if (index > 0) {
+			listStyles.borderTopWidth = 0;
+		}
+	} else {
+		listStyles.borderRadius = borderRadius;
+	}
+	return listStyles;
+}
+
 export const getBlueskyProfileUrl = (app: string, userHandleOrDid: string) =>
 	`${app}/profile/${userHandleOrDid}`;
 

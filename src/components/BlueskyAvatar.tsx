@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import { getBlueskyLinkProps, getBlueskyProfileUrl } from "../helpers";
 import { useBlueskyConfig } from "../hooks/useBlueskyConfig";
+import { useBlueskyShimmer } from "../hooks/useBlueskyShimmer";
 import type { BlueskyProfileData } from "../hooks/useBlueskyProfile";
 
 export type BlueskyAvatarProps = {
@@ -9,11 +10,20 @@ export type BlueskyAvatarProps = {
 
 export const BlueskyAvatar: FC<BlueskyAvatarProps> = ({profile}) => {
 	const {app, openLinksInNewTab, avatarSize, borderColor} = useBlueskyConfig();
+	const {shimmerStyles} = useBlueskyShimmer();
 
 	if (!profile) {
 		return (
 			<div>
-				TODO PLACEHOLDER
+				<div
+					style={{
+						width: avatarSize,
+						height: avatarSize,
+						borderRadius: "50%",
+						border: `1px solid ${borderColor}`,
+						...shimmerStyles,
+					}}
+				/>
 			</div>
 		);
 	}
