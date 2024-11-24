@@ -81,7 +81,7 @@ export const useBlueskyHLS = ({
 	videoRef: RefObject<HTMLVideoElement>;
 	setHlsLoading: (v: boolean) => void;
 }) => {
-	const [Hls, setHls] = useState(hlsLoader.value);
+	const [Hls, setHls] = useState(() => hlsLoader.value);
 	useEffect(() => {
 		if (!Hls) {
 			setHlsLoading(true);
@@ -103,8 +103,9 @@ export const useBlueskyHLS = ({
 			_event: HlsTypes.Events.FRAG_CHANGED,
 			{ frag }: HlsTypes.FragChangedData,
 		) => {
-			if (!Hls) return;
-			if (!hlsRef.current) return;
+			if (!Hls || !hlsRef.current) {
+				return;
+			}
 			const hls = hlsRef.current;
 
 			// If the current quality level goes above 0, flush the low quality
@@ -133,8 +134,9 @@ export const useBlueskyHLS = ({
 	);
 
 	const flushOnLoop = useNonReactiveCallback(() => {
-		if (!Hls) return;
-		if (!hlsRef.current) return;
+		if (!Hls || !hlsRef.current) {
+			return;
+		}
 		const hls = hlsRef.current;
 		// The above callback will catch most stale frags, but there's a corner
 		// case - if there's only one segment in the video, it won't get flushed
