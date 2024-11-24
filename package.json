@@ -1,7 +1,7 @@
 {
 	"name": "bluesky-embed-react",
 	"version": "0.0.1",
-	"description": "React component to embed bluesky profiles",
+	"description": "React component to embed bluesky posts, profiles and feeds",
 	"keywords": [
 		"react",
 		"bluesky",
