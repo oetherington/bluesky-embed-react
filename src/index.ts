@@ -6,6 +6,7 @@ export * from "./hooks/useBlueskyProfile";
 export * from "./hooks/useBlueskyThread";
 export * from "./components/BlueskyAvatar";
 export * from "./components/BlueskyEmbed";
+export * from "./components/BlueskyPlayIcon";
 export * from "./components/BlueskyPost";
 export * from "./components/BlueskySegment";
 export * from "./components/BlueskyText";

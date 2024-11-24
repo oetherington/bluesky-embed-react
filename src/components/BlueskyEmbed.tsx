@@ -1,4 +1,4 @@
-import React, { CSSProperties, FC } from "react";
+import React, { CSSProperties, FC, MouseEvent, useCallback, useState } from "react";
 import type {
     AppBskyEmbedDefs,
 	AppBskyEmbedExternal,
@@ -9,6 +9,7 @@ import type {
 } from "@atproto/api";
 import { useBlueskyConfig } from "../hooks/useBlueskyConfig";
 import { getBlueskyLinkProps } from "../helpers";
+import { BlueskyPlayIcon } from "./BlueskyPlayIcon";
 
 export type BlueskyEmbedData =
 	| AppBskyEmbedImages.View
@@ -31,6 +32,11 @@ const commonStyles = (
 	border: `1px solid ${borderColor}`,
 	aspectRatio: aspect ? `${aspect.width} / ${aspect.height}` : undefined,
 });
+
+const getYoutubeEmbedUrl = (uri: string) => {
+	const result = uri.match(/(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/user\/\S+|\/ytscreeningroom\?v=))([\w\-]{10,12})\b/);
+	return result ? `https://www.youtube.com/embed/${result[1]}?autoplay=1` : null;
+}
 
 const BlueskyImages: FC<{image: AppBskyEmbedImages.View}> = ({
 	image: {images},
@@ -100,7 +106,14 @@ export const BlueskyEmbed: FC<BlueskyEmbedProps> = ({embed}) => {
 	} = useBlueskyConfig();
 	const marginTop = 2 * grid;
 
-	console.log({embed})
+	const [revealed, setRevealed] = useState(false);
+	const onReveal = useCallback((ev?: MouseEvent) => {
+		if (!revealed) {
+			ev?.preventDefault();
+			ev?.stopPropagation();
+			setRevealed(true);
+		}
+	}, [revealed]);
 
 	switch (embed.$type) {
 		case "app.bsky.embed.images#view":
@@ -128,6 +141,7 @@ export const BlueskyEmbed: FC<BlueskyEmbedProps> = ({embed}) => {
 		case "app.bsky.embed.external#view":
 			const external = embed as AppBskyEmbedExternal.View;
 			const {title, description, thumb, uri} = external.external;
+			const youtubeEmbedUrl = getYoutubeEmbedUrl(uri);
 			return (
 				<a
 					href={uri}
@@ -144,15 +158,44 @@ export const BlueskyEmbed: FC<BlueskyEmbedProps> = ({embed}) => {
 					}}
 				>
 					{thumb &&
-						<div style={{
-							height: 300,
-							overflow: "hidden",
-							borderBottom: `1px solid ${borderColor}`,
-							backgroundImage: `url(${thumb})`,
-							backgroundPosition: "center",
-							backgroundRepeat: "no-repeat",
-							backgroundSize: "cover",
-						}} />
+						<div
+							onClick={youtubeEmbedUrl ? onReveal : undefined}
+							style={{
+								height: 300,
+								overflow: "hidden",
+								borderBottom: `1px solid ${borderColor}`,
+								backgroundImage: `url(${thumb})`,
+								backgroundPosition: "center",
+								backgroundRepeat: "no-repeat",
+								backgroundSize: "cover",
+							}}
+						>
+							{youtubeEmbedUrl && revealed &&
+								<iframe
+									src={youtubeEmbedUrl}
+									title={title}
+									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+									allowFullScreen
+									style={{
+										width: "100%",
+										height: "100%",
+										border: 0,
+									}}
+								/>
+							}
+							{youtubeEmbedUrl && !revealed &&
+								<div style={{
+									width: "100%",
+									height: "100%",
+									display: "flex",
+									alignItems: "center",
+									justifyContent: "center",
+									background: "rgba(100, 100, 100, 0.4)",
+								}}>
+									<BlueskyPlayIcon />
+								</div>
+							}
+						</div>
 					}
 					<div style={{
 						display: "flex",
