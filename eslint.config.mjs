@@ -7,7 +7,7 @@ export default tseslint.config(
 	eslint.configs.recommended,
 	tseslint.configs.strictTypeChecked,
 	{
-		ignores: ["storybook-static/", "dist/"],
+		ignores: ["storybook-static/", "dist/", "coverage/"],
 	},
 	{
 		languageOptions: {

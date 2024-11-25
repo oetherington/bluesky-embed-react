@@ -28,7 +28,7 @@
 		"check-format": "prettier --check .",
 		"format": "prettier . --write --log-level warn",
 		"install-browsers": "playwright install --with-deps",
-		"test": "test-storybook --browsers chromium,firefox,webkit",
+		"test": "test-storybook --browsers chromium,firefox,webkit --coverage",
 		"storybook": "storybook dev -p 6006 --no-open",
 		"build-storybook": "storybook build"
 	},
@@ -43,6 +43,7 @@
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.15.0",
+		"@storybook/addon-coverage": "^1.0.4",
 		"@storybook/addon-essentials": "^8.4.5",
 		"@storybook/addon-interactions": "^8.4.5",
 		"@storybook/addon-links": "^8.4.5",
