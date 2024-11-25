@@ -33,3 +33,23 @@ jobs:
               uses: ./.github/actions/setupEnvironment
             - name: Run Prettier
               run: npm run check-format
+
+    runTest:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+            - name: Setup environment
+              uses: ./.github/actions/setupEnvironment
+            - uses: JarvusInnovations/background-action@v1
+              name: Start server
+              with:
+                  run: npm run storybook
+                  wait-on: http://localhost:6006
+                  tail: true
+                  log-output-resume: stderr
+                  wait-for: 1m
+                  log-output: stderr,stdout
+                  log-output-if: failure
+            - name: Run tests
+              run: npm run test

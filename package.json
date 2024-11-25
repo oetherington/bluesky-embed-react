@@ -27,6 +27,7 @@
 		"build": "tsc --skipLibCheck --project tsconfig.build.json",
 		"check-format": "prettier --check .",
 		"format": "prettier . --write --log-level warn",
+		"test": "test-storybook --browsers chromium,firefox,webkit",
 		"storybook": "storybook dev -p 6006 --no-open",
 		"build-storybook": "storybook build"
 	},
@@ -46,6 +47,7 @@
 		"@storybook/addon-links": "^8.4.5",
 		"@storybook/manager-api": "^8.4.5",
 		"@storybook/react-vite": "^8.4.5",
+		"@storybook/test-runner": "^0.19.1",
 		"@storybook/theming": "^8.4.5",
 		"@types/react": "^18.3.12",
 		"@types/react-dom": "^18.3.1",
