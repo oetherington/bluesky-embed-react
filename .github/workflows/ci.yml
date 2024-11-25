@@ -41,6 +41,8 @@ jobs:
               uses: actions/checkout@v4
             - name: Setup environment
               uses: ./.github/actions/setupEnvironment
+            - name: Install browsers
+              run: npm run install-browsers
             - uses: JarvusInnovations/background-action@v1
               name: Start server
               with:

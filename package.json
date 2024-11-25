@@ -27,6 +27,7 @@
 		"build": "tsc --skipLibCheck --project tsconfig.build.json",
 		"check-format": "prettier --check .",
 		"format": "prettier . --write --log-level warn",
+		"install-browsers": "playwright install --with-deps",
 		"test": "test-storybook --browsers chromium,firefox,webkit",
 		"storybook": "storybook dev -p 6006 --no-open",
 		"build-storybook": "storybook build"
