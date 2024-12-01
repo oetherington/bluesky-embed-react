@@ -35,6 +35,17 @@ export const getBlueskyProfileUrl = (app: string, userHandleOrDid: string) =>
 export const getBlueskyTagUrl = (app: string, tagName: string) =>
 	`${app}/hashtag/${tagName}`;
 
+export const getBlueskyPostUrl = (
+	app: string,
+	userHandleOrDid: string,
+	postId: string,
+) => `${getBlueskyProfileUrl(app, userHandleOrDid)}/post/${postId}`;
+
+export const blueskyUriToPostId = (uri: string) => {
+	const parts = uri.split("/");
+	return parts[parts.length - 1] ?? "";
+};
+
 export const getBlueskyLinkProps = (openLinksInNewTab: boolean) =>
 	openLinksInNewTab ? { target: "_blank", rel: "noopener noreferrer" } : {};
 

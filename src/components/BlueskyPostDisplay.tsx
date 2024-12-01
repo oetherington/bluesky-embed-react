@@ -1,7 +1,9 @@
 import React, { FC } from "react";
 import {
 	BlueskyListPosition,
+	blueskyUriToPostId,
 	getBlueskyLinkProps,
+	getBlueskyPostUrl,
 	getBlueskyProfileUrl,
 } from "../helpers";
 import { useBlueskyConfig } from "../hooks/useBlueskyConfig";
@@ -36,12 +38,16 @@ export const BlueskyPostDisplay: FC<BlueskyPostDisplayProps> = ({
 		formatLongDate,
 	} = useBlueskyConfig();
 
+	const hoverEventHandlers = useHoverDecoration();
+
 	// TODO: Fix janky types
 	const post = post_.record as AppBskyFeedPost.Record;
 	const embed = post_.embed;
 
-	const { onMouseOver: onMouseOverTitle, onMouseOut: onMouseOutTitle } =
-		useHoverDecoration();
+	const linkProps = getBlueskyLinkProps(openLinksInNewTab);
+	const postId = blueskyUriToPostId(post_.uri);
+	const postUrl = getBlueskyPostUrl(app, profile.handle, postId);
+	const profileUrl = getBlueskyProfileUrl(app, profile.handle);
 
 	return (
 		<BlueskyPostLayout
@@ -49,26 +55,35 @@ export const BlueskyPostDisplay: FC<BlueskyPostDisplayProps> = ({
 			header={
 				<>
 					<a
-						href={getBlueskyProfileUrl(app, profile.handle)}
-						onMouseOver={onMouseOverTitle}
-						onMouseOut={onMouseOutTitle}
+						href={profileUrl}
 						style={{
 							textDecoration: "none",
 							color: textPrimaryColor,
 							fontWeight: titleFontWeight,
 						}}
-						{...getBlueskyLinkProps(openLinksInNewTab)}
+						{...hoverEventHandlers}
+						{...linkProps}
 					>
 						{profile.displayName}
 					</a>
 					<span style={{ color: textSecondaryColor, fontWeight }}>
 						@{profile.handle} ·{" "}
-						<abbr
-							title={formatLongDate(post.createdAt)}
-							style={{ textDecoration: "none" }}
+						<a
+							href={postUrl}
+							style={{
+								color: textSecondaryColor,
+								textDecoration: "none",
+							}}
+							{...hoverEventHandlers}
+							{...linkProps}
 						>
-							{formatShortDate(post.createdAt)}
-						</abbr>
+							<abbr
+								title={formatLongDate(post.createdAt)}
+								style={{ textDecoration: "none" }}
+							>
+								{formatShortDate(post.createdAt)}
+							</abbr>
+						</a>
 					</span>
 				</>
 			}
