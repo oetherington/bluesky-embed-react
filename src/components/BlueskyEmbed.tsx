@@ -42,11 +42,23 @@ const commonStyles = (
 	aspectRatio: aspect ? `${aspect.width} / ${aspect.height}` : undefined,
 });
 
-const getYoutubeEmbedUrl = (url: string): string | null => {
-	const result = url.match(
-		/(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/user\/\S+|\/ytscreeningroom\?v=))([\w-]{10,12})\b/,
-	);
-	return result ? `https://www.youtube.com/embed/${result[1]}?autoplay=1` : null;
+const youtubeRegex = new RegExp(
+	"(?:youtu\\.be\\/|youtube\\.com(?:\\/embed\\/|\\/v\\/|\\/watch\\?v=|\\/user\\/\\S+|\\/ytscreeningroom\\?v=))([\\w-]{10,12})\\b",
+);
+const vimeoRegex = new RegExp(
+	"vimeo\\.com\\/(?:channels\\/(?:\\w+\\/)?|groups\\/(?:[^\\/]*)\\/videos\\/|video\\/|)(\\d+)(?:|\\/\\?)",
+);
+
+const getIframeEmbedUrl = (url: string): string | null => {
+	let match = url.match(youtubeRegex);
+	if (match) {
+		return `https://www.youtube.com/embed/${match[1]}?autoplay=1`;
+	}
+	match = url.match(vimeoRegex);
+	if (match) {
+		return `https://player.vimeo.com/video/${match[1]}?autoplay=1`;
+	}
+	return null;
 };
 
 const getUrlHost = (url: string): string | null => {
@@ -198,7 +210,7 @@ export const BlueskyEmbed: FC<BlueskyEmbedProps> = ({ embed }) => {
 		case "app.bsky.embed.external#view": {
 			const external = embed as AppBskyEmbedExternal.View;
 			const { title, description, thumb, uri } = external.external;
-			const youtubeEmbedUrl = getYoutubeEmbedUrl(uri);
+			const iframeEmbedUrl = getIframeEmbedUrl(uri);
 			const host = getUrlHost(uri);
 			return (
 				<a
@@ -217,20 +229,23 @@ export const BlueskyEmbed: FC<BlueskyEmbedProps> = ({ embed }) => {
 				>
 					{thumb && (
 						<div
-							onClick={youtubeEmbedUrl ? onReveal : undefined}
+							onClick={iframeEmbedUrl ? onReveal : undefined}
 							style={{
 								height: 300,
 								overflow: "hidden",
 								borderBottom: `1px solid ${borderColor}`,
-								backgroundImage: `url(${thumb})`,
+								backgroundImage: revealed
+									? undefined
+									: `url(${thumb})`,
 								backgroundPosition: "center",
 								backgroundRepeat: "no-repeat",
 								backgroundSize: "cover",
+								backgroundColor: "white",
 							}}
 						>
-							{youtubeEmbedUrl && revealed && (
+							{iframeEmbedUrl && revealed && (
 								<iframe
-									src={youtubeEmbedUrl}
+									src={iframeEmbedUrl}
 									title={title}
 									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 									allowFullScreen
@@ -241,7 +256,7 @@ export const BlueskyEmbed: FC<BlueskyEmbedProps> = ({ embed }) => {
 									}}
 								/>
 							)}
-							{youtubeEmbedUrl && !revealed && (
+							{iframeEmbedUrl && !revealed && (
 								<div
 									style={{
 										width: "100%",
