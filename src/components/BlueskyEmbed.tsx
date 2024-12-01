@@ -48,6 +48,7 @@ const youtubeRegex = new RegExp(
 const vimeoRegex = new RegExp(
 	"vimeo\\.com\\/(?:channels\\/(?:\\w+\\/)?|groups\\/(?:[^\\/]*)\\/videos\\/|video\\/|)(\\d+)(?:|\\/\\?)",
 );
+const twitchRegex = new RegExp("twitch.tv/(.+)");
 
 const getIframeEmbedUrl = (url: string): string | null => {
 	let match = url.match(youtubeRegex);
@@ -57,6 +58,19 @@ const getIframeEmbedUrl = (url: string): string | null => {
 	match = url.match(vimeoRegex);
 	if (match) {
 		return `https://player.vimeo.com/video/${match[1]}?autoplay=1`;
+	}
+	match = url.match(twitchRegex);
+	if (match) {
+		const parent =
+			typeof window === "undefined" ? "localhost" : window.location.hostname;
+		const [channelOrVideo, clipOrId, id] = match[1].split("/");
+		if (channelOrVideo === "videos") {
+			return `https://player.twitch.tv/?volume=0.5&!muted&autoplay&video=${clipOrId}&parent=${parent}`;
+		} else if (clipOrId === "clip") {
+			return `https://clips.twitch.tv/embed?volume=0.5&autoplay=true&clip=${id}&parent=${parent}`;
+		} else if (channelOrVideo) {
+			return `https://player.twitch.tv/?volume=0.5&!muted&autoplay&channel=${channelOrVideo}&parent=${parent}`;
+		}
 	}
 	return null;
 };
