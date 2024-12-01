@@ -31,7 +31,7 @@ const hlsLoader = new (class HlsLoader {
 
 	private async load() {
 		// @ts-expect-error hls.js is a relatively large library - load async
-		const module = (await import("hls.js/dist/hls.min")) as {
+		const module = (await import("hls.js/dist/hls.min.js")) as {
 			default: HlsModule;
 		};
 		this.value = module.default;
