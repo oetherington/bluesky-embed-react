@@ -124,6 +124,7 @@ const BlueskyVideo: FC<{ video: AppBskyEmbedVideo.View }> = ({ video }) => {
 	const { borderColor } = useBlueskyConfig();
 	const videoRef = useRef<HTMLVideoElement>(null);
 	const [_hasSubtitleTrack, setHasSubtitleTrack] = useState(false);
+	const [_hlsLoading, setHlsLoading] = useState(false);
 	const [error, setError] = useState<Error | null>(null);
 
 	useBlueskyHLS({
@@ -131,6 +132,7 @@ const BlueskyVideo: FC<{ video: AppBskyEmbedVideo.View }> = ({ video }) => {
 		setHasSubtitleTrack,
 		setError,
 		videoRef,
+		setHlsLoading,
 	});
 
 	if (error) {
