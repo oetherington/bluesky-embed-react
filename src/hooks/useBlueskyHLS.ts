@@ -5,6 +5,7 @@
  */
 
 import {
+	MutableRefObject,
 	RefObject,
 	useCallback,
 	useEffect,
@@ -12,34 +13,8 @@ import {
 	useRef,
 	useState,
 } from "react";
-import type * as HlsTypes from "hls.js";
+import Hls, { Events, FragChangedData, Fragment } from "hls.js";
 import { BlueskyError } from "../helpers";
-
-type HlsModule = typeof HlsTypes.default;
-
-const hlsLoader = new (class HlsLoader {
-	public value: HlsModule | null = null;
-	private listeners: ((mod: HlsModule) => void)[] = [];
-
-	constructor() {
-		void this.load();
-	}
-
-	addListener(callback: (mod: HlsModule) => void) {
-		this.listeners.push(callback);
-	}
-
-	private async load() {
-		// @ts-expect-error hls.js is a relatively large library - load async
-		const module = (await import("hls.js/dist/hls.min")) as {
-			default: HlsModule;
-		};
-		this.value = module.default;
-		for (const listener of this.listeners) {
-			listener(module.default);
-		}
-	}
-})();
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const useNonReactiveCallback = <T extends (...args: any) => any>(fn: T): T => {
@@ -73,45 +48,27 @@ export const useBlueskyHLS = ({
 	setHasSubtitleTrack,
 	setError,
 	videoRef,
-	setHlsLoading,
 }: {
 	playlist: string;
 	setHasSubtitleTrack: (v: boolean) => void;
 	setError: (v: Error | null) => void;
 	videoRef: RefObject<HTMLVideoElement>;
-	setHlsLoading: (v: boolean) => void;
-}) => {
-	const [Hls, setHls] = useState(() => hlsLoader.value);
-	useEffect(() => {
-		if (!Hls) {
-			setHlsLoading(true);
-			hlsLoader.addListener((loadedHls) => {
-				setHls(loadedHls);
-				setHlsLoading(false);
-			});
-		}
-	}, [Hls, setHlsLoading]);
-
-	const hlsRef = useRef<HlsTypes.default | undefined>(undefined);
-	const [lowQualityFragments, setLowQualityFragments] = useState<
-		HlsTypes.Fragment[]
-	>([]);
+}): MutableRefObject<Hls | undefined> => {
+	const hlsRef = useRef<Hls | undefined>(undefined);
+	const [lowQualityFragments, setLowQualityFragments] = useState<Fragment[]>([]);
 
 	// Purge low quality segments from buffer on next frag change
 	const handleFragChange = useNonReactiveCallback(
-		(
-			_event: HlsTypes.Events.FRAG_CHANGED,
-			{ frag }: HlsTypes.FragChangedData,
-		) => {
-			if (!Hls || !hlsRef.current) {
+		(_event: Events.FRAG_CHANGED, { frag }: FragChangedData) => {
+			const hls = hlsRef.current;
+			if (!hls) {
 				return;
 			}
-			const hls = hlsRef.current;
 
 			// If the current quality level goes above 0, flush the low quality
 			// segments
 			if (hls.nextAutoLevel > 0) {
-				const flushed: HlsTypes.Fragment[] = [];
+				const flushed: Fragment[] = [];
 
 				for (const lowQualFrag of lowQualityFragments) {
 					// Avoid if close to the current fragment
@@ -134,10 +91,10 @@ export const useBlueskyHLS = ({
 	);
 
 	const flushOnLoop = useNonReactiveCallback(() => {
-		if (!Hls || !hlsRef.current) {
+		const hls = hlsRef.current;
+		if (!hls) {
 			return;
 		}
-		const hls = hlsRef.current;
 		// The above callback will catch most stale frags, but there's a corner
 		// case - if there's only one segment in the video, it won't get flushed
 		// because it avoids flushing the currently active segment. Therefore, we
@@ -159,7 +116,7 @@ export const useBlueskyHLS = ({
 	});
 
 	useEffect(() => {
-		if (!videoRef.current || !Hls) {
+		if (!videoRef.current) {
 			return;
 		}
 		if (!Hls.isSupported()) {
