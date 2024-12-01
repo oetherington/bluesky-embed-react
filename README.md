@@ -11,6 +11,10 @@ Bluesky Embed React is an independent project, not affiliated with Bluesky.
 
 https://etherington.xyz/bluesky-embed-react
 
+![Light mode embed](./public/light-mode.png?raw=true)
+
+![Dark mode embed](./public/dark-mode.png?raw=true)
+
 ## Install
 
 ```bash
