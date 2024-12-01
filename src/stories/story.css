@@ -1,3 +1,7 @@
+:root {
+	color-scheme: light dark;
+}
+
 body {
-	background: #222;
+	background: light-dark(#ddd, #222);
 }

@@ -76,12 +76,12 @@ The props are of type `BlueskyConfig` which has the following properties:
 -   **avatarSize** The size of user avatars in pixels (default `42`)
 -   **hideAvatars** Whether or not to hide user avatars (default `false`)
 -   **hideEmbeds** Whether or not to hide embedded media and links (default `false`)
--   **textPrimaryColor** CSS color string for primary text (default `#f1f3f5`)
--   **anchorColor** CSS color string for links (default `#208bfe`)
--   **textSecondaryColor** CSS color string for secondary text (default `#aebbc9`)
--   **backgroundColor** CSS color string for post backgrounds (default `#161e27`)
--   **borderColor** CSS color string for borders (default `#2e4052`)
--   **loadingShimmer** CSS color string for the loading shimmer effect (default `linear-gradient(100deg, #aaa 40%, #bdbdbd 50%, #aaa 60%)`)
+-   **textPrimaryColor** CSS color string for primary text (default `light-dark(#0b0f14, #f1f3f5)`)
+-   **textSecondaryColor** CSS color string for secondary text (default `light-dark(#42576c, #aebbc9)`)
+-   **anchorColor** CSS color string for links (default `light-dark(#1083fe, #208bfe)`)
+-   **backgroundColor** CSS color string for post backgrounds (default `light-dark(#fff, #161e27)`)
+-   **borderColor** CSS color string for borders (default `light-dark(#d4dbe2, #2e4052)`)
+-   **loadingShimmer** CSS color string for the loading shimmer effect (default `linear-gradient(100deg, light-dark(#d5d5d5, #aaa) 40%, light-dark(#dbdbdb, #bdbdbd) 50%, light-dark(#d5d5d5, #aaa) 60%)`)
 -   **fontFamily** CSS font stack to apply to all posts (default `InterVariable, Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"`)
 -   **fontSize** CSS font size for main text (default `15px`)
 -   **embedFontSize** CSS font size for embedded media descriptions (default `14px`)
@@ -93,6 +93,28 @@ The props are of type `BlueskyConfig` which has the following properties:
 -   **width** CSS width applied to posts (default `600px`)
 -   **formatShortDate** Function to format dates into a short format
 -   **formatLongDate** Function to format dates into a long format
+
+### Switching between light mode and dark mode
+
+The default colors use the CSS `light-dark` [color function](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/light-dark)
+to automatically switch colors based on the current operating system setting.
+
+To enable this behaviour you need to set the CSS `color-scheme` property to
+`light dark`:
+
+```css
+:root {
+	color-scheme: light dark;
+}
+```
+
+You can also override the operating system to choose one theme or the other by
+setting `color-scheme` to either `light` or `dark`. If you don't set `color-scheme`
+then the browser will default to the light theme, even if the user has set
+their operating system to dark mode.
+
+For more fine grained theme control you can set the color options manually
+in a `BlueskyConfig` provider (see above).
 
 ## License
 
