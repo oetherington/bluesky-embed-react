@@ -11,6 +11,7 @@ export type BlueskyConfig = {
 	hideEmbeds: boolean;
 	textPrimaryColor: string;
 	textSecondaryColor: string;
+	anchorColor: string;
 	backgroundColor: string;
 	borderColor: string;
 	loadingShimmer: string;
@@ -36,6 +37,7 @@ export const defaultBlueskyConfig: BlueskyConfig = {
 	hideEmbeds: false,
 	textPrimaryColor: "#f1f3f5",
 	textSecondaryColor: "#aebbc9",
+	anchorColor: "#208bfe",
 	backgroundColor: "#161e27",
 	borderColor: "#2e4052",
 	loadingShimmer: "linear-gradient(100deg, #aaa 40%, #bdbdbd 50%, #aaa 60%)",

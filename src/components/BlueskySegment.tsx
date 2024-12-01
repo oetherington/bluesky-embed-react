@@ -6,18 +6,27 @@ import {
 	getBlueskyTagUrl,
 } from "../helpers";
 import { useBlueskyConfig } from "../hooks/useBlueskyConfig";
+import { useHoverDecoration } from "../hooks/useHoverDecoration";
 
 export type BlueskySegmentProps = {
 	segment: RichTextSegment;
 };
 
 export const BlueskySegment: FC<BlueskySegmentProps> = ({ segment }) => {
-	const { app, openLinksInNewTab } = useBlueskyConfig();
-	const linkProps = getBlueskyLinkProps(openLinksInNewTab);
+	const { app, anchorColor, openLinksInNewTab } = useBlueskyConfig();
+	const eventHandlers = useHoverDecoration();
+	const anchorProps = {
+		...eventHandlers,
+		...getBlueskyLinkProps(openLinksInNewTab),
+		style: {
+			color: anchorColor,
+			textDecoration: "none",
+		},
+	};
 
 	if (segment.isLink()) {
 		return (
-			<a href={segment.link?.uri} {...linkProps}>
+			<a href={segment.link?.uri} {...anchorProps}>
 				{segment.text}
 			</a>
 		);
@@ -27,7 +36,7 @@ export const BlueskySegment: FC<BlueskySegmentProps> = ({ segment }) => {
 		return (
 			<a
 				href={getBlueskyProfileUrl(app, segment.mention?.did ?? "")}
-				{...linkProps}
+				{...anchorProps}
 			>
 				{segment.text}
 			</a>
@@ -36,7 +45,7 @@ export const BlueskySegment: FC<BlueskySegmentProps> = ({ segment }) => {
 
 	if (segment.isTag()) {
 		return (
-			<a href={getBlueskyTagUrl(app, segment.tag?.tag ?? "")} {...linkProps}>
+			<a href={getBlueskyTagUrl(app, segment.tag?.tag ?? "")} {...anchorProps}>
 				{segment.text}
 			</a>
 		);

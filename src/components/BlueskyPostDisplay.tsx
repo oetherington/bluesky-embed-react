@@ -1,4 +1,4 @@
-import React, { FC, MouseEvent, useCallback } from "react";
+import React, { FC } from "react";
 import {
 	BlueskyListPosition,
 	getBlueskyLinkProps,
@@ -8,22 +8,15 @@ import { useBlueskyConfig } from "../hooks/useBlueskyConfig";
 import { BlueskyAvatar } from "./BlueskyAvatar";
 import { BlueskyText } from "./BlueskyText";
 import { BlueskyEmbed } from "./BlueskyEmbed";
+import { BlueskyPostLayout } from "./BlueskyPostLayout";
+import { useHoverDecoration } from "../hooks/useHoverDecoration";
 import type { BlueskyProfileData } from "../hooks/useBlueskyProfile";
 import type { AppBskyFeedDefs, AppBskyFeedPost } from "@atproto/api";
-import { BlueskyPostLayout } from "./BlueskyPostLayout";
 
 export type BlueskyPostDisplayProps = {
 	profile: BlueskyProfileData;
 	post: AppBskyFeedDefs.PostView;
 	listPosition?: BlueskyListPosition;
-};
-
-const decorationHandler = (
-	value: "underline" | "none",
-	ev: MouseEvent<HTMLAnchorElement>,
-) => {
-	const target = ev.target as HTMLAnchorElement;
-	target.style.textDecoration = value;
 };
 
 export const BlueskyPostDisplay: FC<BlueskyPostDisplayProps> = ({
@@ -47,12 +40,8 @@ export const BlueskyPostDisplay: FC<BlueskyPostDisplayProps> = ({
 	const post = post_.record as AppBskyFeedPost.Record;
 	const embed = post_.embed;
 
-	const onMouseOverTitle = useCallback((ev: MouseEvent<HTMLAnchorElement>) => {
-		decorationHandler("underline", ev);
-	}, []);
-	const onMouseOutTitle = useCallback((ev: MouseEvent<HTMLAnchorElement>) => {
-		decorationHandler("none", ev);
-	}, []);
+	const { onMouseOver: onMouseOverTitle, onMouseOut: onMouseOutTitle } =
+		useHoverDecoration();
 
 	return (
 		<BlueskyPostLayout

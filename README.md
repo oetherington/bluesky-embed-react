@@ -77,6 +77,7 @@ The props are of type `BlueskyConfig` which has the following properties:
 -   **hideAvatars** Whether or not to hide user avatars (default `false`)
 -   **hideEmbeds** Whether or not to hide embedded media and links (default `false`)
 -   **textPrimaryColor** CSS color string for primary text (default `#f1f3f5`)
+-   **anchorColor** CSS color string for links (default `#208bfe`)
 -   **textSecondaryColor** CSS color string for secondary text (default `#aebbc9`)
 -   **backgroundColor** CSS color string for post backgrounds (default `#161e27`)
 -   **borderColor** CSS color string for borders (default `#2e4052`)
