@@ -7,6 +7,11 @@ const preview = {
 				date: /Date$/,
 			},
 		},
+		darkMode: {
+			current: "light",
+			classTarget: "html",
+			stylePreview: true,
+		},
 	},
 };
 
