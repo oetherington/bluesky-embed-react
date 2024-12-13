@@ -45,8 +45,6 @@
 		"@eslint/js": "^9.15.0",
 		"@storybook/addon-coverage": "^1.0.4",
 		"@storybook/addon-essentials": "^8.4.5",
-		"@storybook/addon-interactions": "^8.4.5",
-		"@storybook/addon-links": "^8.4.5",
 		"@storybook/manager-api": "^8.4.5",
 		"@storybook/react-vite": "^8.4.5",
 		"@storybook/test-runner": "^0.20.1",
