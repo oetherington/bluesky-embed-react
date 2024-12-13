@@ -5,6 +5,20 @@ import { useBlueskyFetch } from "./useBlueskyFetch";
 
 type BlueskyProfilePostsData = AppBskyFeedGetAuthorFeed.OutputSchema;
 
+export const getBlueskyProfilePosts = async (
+	client: BlueskyClient,
+	userHandle: string,
+	limit: number = 10,
+	cursor?: string,
+): Promise<BlueskyProfilePostsData> => {
+	const result = await client.getAuthorFeed({
+		actor: userHandle,
+		limit,
+		cursor,
+	});
+	return result.data;
+};
+
 export const useBlueskyProfilePosts = (
 	userHandle: string,
 	limit: number = 10,
@@ -12,12 +26,7 @@ export const useBlueskyProfilePosts = (
 ) => {
 	const callback = useCallback(
 		async (client: BlueskyClient) => {
-			const result = await client.getAuthorFeed({
-				actor: userHandle,
-				limit,
-				cursor,
-			});
-			return result.data;
+			return getBlueskyProfilePosts(client, userHandle, limit, cursor);
 		},
 		[userHandle, limit, cursor],
 	);

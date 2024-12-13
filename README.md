@@ -120,6 +120,36 @@ their operating system to dark mode.
 For more fine grained theme control you can set the color options manually
 in a `BlueskyConfig` provider (see above).
 
+## SSR
+
+You can use the raw API to fetch data during SSR. For instance, in NextJS:
+
+```jsx
+import {
+	BlueskyPostsList,
+	getBlueskyClient,
+	getBlueskyProfilePosts,
+} from "bluesky-embed-react";
+
+export default function Page({ profile, posts }) {
+	return <BlueskyPostsList profile={profile} posts={posts} />;
+}
+
+export const getStaticProps = async () => {
+	const client = getBlueskyClient();
+	const [profile, posts] = await Promise.all([
+		getBlueskyProfile(client, "bsky.app"),
+		getBlueskyProfilePosts(client, "bsky.app"),
+	]);
+	return {
+		props: {
+			profile,
+			posts,
+		},
+	};
+};
+```
+
 ## License
 
 MIT © [oetherington](https://github.com/oetherington). See the included [COPYING](https://raw.githubusercontent.com/oetherington/bluesky-embed-react/refs/heads/main/COPYING) file for details.
