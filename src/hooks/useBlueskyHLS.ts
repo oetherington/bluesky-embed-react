@@ -78,7 +78,7 @@ export const useBlueskyHLS = ({
 	playlist: string;
 	setHasSubtitleTrack: (v: boolean) => void;
 	setError: (v: Error | null) => void;
-	videoRef: RefObject<HTMLVideoElement>;
+	videoRef: RefObject<HTMLVideoElement | null>;
 	setHlsLoading: (v: boolean) => void;
 }) => {
 	const [Hls, setHls] = useState(() => hlsLoader.value);
