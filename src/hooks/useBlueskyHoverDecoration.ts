@@ -8,7 +8,7 @@ const decorationHandler = (
 	target.style.textDecoration = value;
 };
 
-export const useHoverDecoration = () => {
+export const useBlueskyHoverDecoration = () => {
 	const onMouseOver = useCallback((ev: MouseEvent<HTMLAnchorElement>) => {
 		decorationHandler("underline", ev);
 	}, []);

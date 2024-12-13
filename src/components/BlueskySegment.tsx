@@ -6,7 +6,7 @@ import {
 	getBlueskyTagUrl,
 } from "../helpers";
 import { useBlueskyConfig } from "../hooks/useBlueskyConfig";
-import { useHoverDecoration } from "../hooks/useHoverDecoration";
+import { useBlueskyHoverDecoration } from "../hooks/useBlueskyHoverDecoration";
 
 export type BlueskySegmentProps = {
 	segment: RichTextSegment;
@@ -14,7 +14,7 @@ export type BlueskySegmentProps = {
 
 export const BlueskySegment: FC<BlueskySegmentProps> = ({ segment }) => {
 	const { app, anchorColor, openLinksInNewTab } = useBlueskyConfig();
-	const eventHandlers = useHoverDecoration();
+	const eventHandlers = useBlueskyHoverDecoration();
 	const anchorProps = {
 		...eventHandlers,
 		...getBlueskyLinkProps(openLinksInNewTab),

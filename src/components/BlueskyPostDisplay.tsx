@@ -11,7 +11,7 @@ import { BlueskyAvatar } from "./BlueskyAvatar";
 import { BlueskyText } from "./BlueskyText";
 import { BlueskyEmbed } from "./BlueskyEmbed";
 import { BlueskyPostLayout } from "./BlueskyPostLayout";
-import { useHoverDecoration } from "../hooks/useHoverDecoration";
+import { useBlueskyHoverDecoration } from "../hooks/useBlueskyHoverDecoration";
 import type { BlueskyProfileData } from "../hooks/useBlueskyProfile";
 import type { AppBskyFeedDefs, AppBskyFeedPost } from "@atproto/api";
 
@@ -38,7 +38,7 @@ export const BlueskyPostDisplay: FC<BlueskyPostDisplayProps> = ({
 		formatLongDate,
 	} = useBlueskyConfig();
 
-	const hoverEventHandlers = useHoverDecoration();
+	const hoverEventHandlers = useBlueskyHoverDecoration();
 
 	// TODO: Fix janky types
 	const post = post_.record as AppBskyFeedPost.Record;
