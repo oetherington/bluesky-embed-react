@@ -89,7 +89,7 @@ export const BlueskyPostDisplay: FC<BlueskyPostDisplayProps> = ({
 			}
 			content={
 				<>
-					<BlueskyText text={post.text} />
+					<BlueskyText text={post.text} facets={post.facets} />
 					{embed && !hideEmbeds && <BlueskyEmbed embed={embed} />}
 				</>
 			}

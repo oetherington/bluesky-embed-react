@@ -42,6 +42,7 @@ const createPostStory = (userHandle: string, postId: string) => {
 };
 
 export const BlueskyPost = createPostStory("bsky.app", "3l6oveex3ii2l");
+export const BlueskyLinkPost = createPostStory("ollieday.me", "3lkyniy476c2y");
 export const BlueskySingleImagePost = createPostStory("bsky.app", "3lb6vz4ms6c25");
 export const BlueskyMultiImagePost = createPostStory("bsky.app", "3ky73uy2vad2f");
 export const BlueskyVideoPost = createPostStory("bsky.app", "3lax5zxh7bc2p");
