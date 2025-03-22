@@ -1,9 +1,9 @@
 import React, { FC } from "react";
+import { isThreadViewPost } from "@atproto/api/dist/client/types/app/bsky/feed/defs";
 import { useBlueskyThread } from "../hooks/useBlueskyThread";
 import { useBlueskyProfile } from "../hooks/useBlueskyProfile";
 import { BlueskyPostLoading } from "./BlueskyPostLoading";
 import { BlueskyPostDisplay } from "./BlueskyPostDisplay";
-import type { AppBskyFeedDefs } from "@atproto/api";
 
 export type BlueskyPostProps = {
 	userHandle: string;
@@ -22,14 +22,13 @@ export const BlueskyPost: FC<BlueskyPostProps> = ({ userHandle, postId }) => {
 		return null;
 	}
 
-	if (threadLoading || !thread?.post || !profile) {
+	if (threadLoading || !profile || !thread) {
 		return <BlueskyPostLoading />;
 	}
 
-	return (
-		<BlueskyPostDisplay
-			profile={profile}
-			post={thread.post as AppBskyFeedDefs.PostView}
-		/>
-	);
+	if (!isThreadViewPost(thread)) {
+		return null;
+	}
+
+	return <BlueskyPostDisplay profile={profile} post={thread.post} />;
 };
